@@ -26,7 +26,31 @@ npm run preview
 | Playground photos | `public/images/moments/` |
 | Music | `public/music/the-blessing.mp3` |
 | Gift voice notes | `public/audio/voice-note-01.mp3`, `voice-note-02.mp3` |
+| Wish voice note | `public/audio/wish-voice.mp3` + `src/content/wishVoice.ts` |
 | Page metadata | `index.html` |
+
+## Adding the wish voice note
+
+The player under the sealed cake message is already built and reserved. It stays
+hidden until the recording is in place, so nothing looks broken in the meantime.
+
+1. Put the recording at `public/audio/wish-voice.mp3`.
+2. Keep it phone-friendly — mono, 96–128 kbps, and trim long silences:
+
+   ```bash
+   ffmpeg -i "recording.m4a" -ac 1 -b:a 112k -af silenceremove=start_periods=1:start_threshold=-45dB \
+     public/audio/wish-voice.mp3
+   ```
+
+3. In `src/content/wishVoice.ts`, set `ready: true` and update `approx` to the real
+   length in seconds (shown only until the file's metadata loads).
+4. Check it locally: open the cake section, blow out the candles, and press play.
+   Want to see the slot before the file exists? Add `?wishvoice=1` to the URL — it
+   renders the block with an existing note as a stand-in.
+5. `npm run build`, then redeploy.
+
+The player obeys the site-wide one-audio-at-a-time rule, so it pauses the music or
+a gift note when it starts.
 
 The guestbook runs in local demo mode (wishes live in `localStorage`). To collect
 real wishes, set `VITE_FORMSPREE_ENDPOINT` (e.g. `https://formspree.io/f/xxxx`) in

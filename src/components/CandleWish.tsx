@@ -1,11 +1,25 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ConfettiBurst from './magic/ConfettiBurst';
 import Eyebrow from './system/Eyebrow';
+import VoiceNote from './system/VoiceNote';
 import { useBlowDetection } from '../hooks/useBlowDetection';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
+import { WISH_VOICE } from '../content/wishVoice';
 import './CandleWish.css';
 
 const KEEPSAKE_KEY = 'luna-keepsakes-v1';
+
+/* Preview the reserved slot before the real recording arrives: open the site
+   with ?wishvoice=1 and the block renders with an existing note as a stand-in. */
+function readWishVoice() {
+  if (
+    typeof window !== 'undefined' &&
+    new URLSearchParams(window.location.search).has('wishvoice')
+  ) {
+    return { ...WISH_VOICE, ready: true, src: '/audio/voice-note-02.mp3', approx: 14 };
+  }
+  return WISH_VOICE;
+}
 
 type WishStatus = 'lit' | 'sealed';
 
@@ -27,6 +41,7 @@ const CANDLES = [
 
 export default function CandleWish() {
   const [status, setStatus] = useState<WishStatus>('lit');
+  const [wishVoice] = useState(readWishVoice);
   const [burstKey, setBurstKey] = useState(0);
   const [wishVisible, setWishVisible] = useState(false);
   const [puffActive, setPuffActive] = useState(false);
@@ -254,13 +269,28 @@ export default function CandleWish() {
         </p>
 
         {wishVisible && (
-          <div ref={wishRef} className="cw__wish" role="status" aria-live="polite">
-            <span className="cw__wish-kicker">Wish sealed</span>
-            <p className="cw__wish-title">Happy nineteenth, my Swethaaa.</p>
-            <p className="cw__wish-sub">
-              Nineteen years of you — and I would still choose every single one.
-            </p>
-            <span className="cw__wish-sign">always, Dev</span>
+          <div ref={wishRef} className="cw__wish-stack">
+            <div className="cw__wish" role="status" aria-live="polite">
+              <span className="cw__wish-kicker">Wish sealed</span>
+              <p className="cw__wish-title">Happy nineteenth, my Swethaaa.</p>
+              <p className="cw__wish-sub">
+                Nineteen years of you — and I would still choose every single one.
+              </p>
+              <span className="cw__wish-sign">always, Dev</span>
+            </div>
+
+            {wishVoice.ready && (
+              <div className="cw__wish-voice">
+                <span className="cw__wish-voice-kicker">one more thing</span>
+                <p className="cw__wish-voice-lead">{wishVoice.lead}</p>
+                <VoiceNote
+                  src={wishVoice.src}
+                  approx={wishVoice.approx}
+                  title={wishVoice.title}
+                  className="cw__wish-voice-player"
+                />
+              </div>
+            )}
           </div>
         )}
       </div>

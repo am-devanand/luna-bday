@@ -1,0 +1,103 @@
+/* ============================================================
+   VoiceNote — shared audio player used by the gift boxes and
+   the wish voice note beside the cake.
+   ============================================================ */
+
+.voice-note {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    'play wave time'
+    'error error error';
+  align-items: center;
+  gap: 0.55rem 0.9rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.5);
+  text-align: left;
+}
+
+.voice-note__play {
+  grid-area: play;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: var(--dusty-rose);
+  color: var(--ivory-0);
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(138, 75, 66, 0.24);
+  transition: background var(--motion-fast) var(--ease-out-expo), transform var(--motion-fast) var(--ease-out-expo);
+}
+
+.voice-note__play:hover {
+  background: var(--dusty-rose-deep);
+  transform: scale(1.04);
+}
+
+.voice-note__play:focus-visible {
+  outline: 2px solid var(--dusty-rose-deep);
+  outline-offset: 3px;
+}
+
+.voice-note__wave {
+  grid-area: wave;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 42px;
+  min-width: 0;
+}
+
+.voice-note__bar {
+  flex: 1 1 0;
+  min-width: 2px;
+  max-width: 4px;
+  border-radius: 2px;
+  background: rgba(42, 33, 28, 0.16);
+  transition: background 0.18s linear;
+}
+
+.voice-note__bar.is-filled {
+  background: var(--dusty-rose);
+}
+
+.voice-note__time {
+  grid-area: time;
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.voice-note__error {
+  grid-area: error;
+  margin: 0.2rem 0 0;
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: var(--dusty-rose-deep);
+}
+
+@media (max-width: 480px) {
+  .voice-note {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      'play wave'
+      'time time'
+      'error error';
+    gap: 0.4rem 0.8rem;
+  }
+
+  .voice-note__time {
+    text-align: right;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .voice-note__play {
+    transition: none;
+  }
+}

@@ -633,6 +633,54 @@
   color: var(--dusty-rose);
 }
 
+/* ── The wish, spoken ──
+   Reserved second beat under the sealed card. Renders only when
+   WISH_VOICE.ready is true, so the live site never shows a dead player. */
+
+.cw__wish-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.cw__wish-voice {
+  position: relative;
+  width: min(430px, 100%);
+  margin: 0.85rem auto 0;
+  padding: 1.15rem 1.25rem 1.2rem;
+  border: 1px solid var(--hairline-soft, rgba(42, 33, 28, 0.07));
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow:
+    0 1px 2px rgba(42, 33, 28, 0.03),
+    0 12px 30px rgba(42, 33, 28, 0.05);
+  animation: cwWishIn 0.75s var(--ease-out-expo) 0.24s both;
+}
+
+.cw__wish-voice-kicker {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-dark, #A8673E);
+}
+
+.cw__wish-voice-lead {
+  max-width: 36ch;
+  margin: 0 auto 0.85rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  text-wrap: balance;
+}
+
+.cw__wish-voice-player {
+  background: rgba(255, 255, 255, 0.55);
+}
+
 /* ── Mobile ── */
 
 @media (max-width: 640px) {
@@ -656,6 +704,10 @@
     margin-top: 1rem;
     padding: 1.15rem 1.1rem;
   }
+
+  .cw__wish-voice {
+    padding: 1rem 0.95rem 1.05rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -663,7 +715,8 @@
   .cake__flame,
   .cw__mic--listening::before,
   .cw--sealed .cake__smoke,
-  .cw__wish {
+  .cw__wish,
+  .cw__wish-voice {
     animation: none;
   }
 }
