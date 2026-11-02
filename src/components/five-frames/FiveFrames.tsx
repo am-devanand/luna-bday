@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion';
 import PhotoLightbox from './PhotoLightbox';
 import './FiveFrames.css';
@@ -91,6 +91,16 @@ const FRAMES = [
   { tone: 'develop', num: '03', title: 'That smile I know by heart', subtitle: 'Third of five' },
   { tone: 'film', num: '04', title: 'Red looks good on you', subtitle: 'Fourth of five' },
   { tone: 'widescreen', num: '05', title: 'My favourite, in black & white', subtitle: 'Last of five' },
+];
+
+/* Short stories for the card backs and the lightbox. Adapted from the
+   gallery notes written for Luna — no invented anecdotes. */
+const STORIES = [
+  'Your signature warm smile — the kind that tells people they are safe around you.',
+  'A quiet, thoughtful gaze. You feel things deeply, and you carry so much care for others.',
+  'The headband selfie. Graceful in the most casual moments, without even trying.',
+  'The warm look you give when you are listening closely. You are a rare listener, Luna.',
+  'The black-and-white frame with the pink hibiscus — your love for nature’s small, simple details.',
 ];
 
 /* ─── Frame caption ──────────────────────────────── */
@@ -464,15 +474,21 @@ export default function FiveFrames() {
     offset: ['start end', 'end start'],
   });
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [flipped, setFlipped] = useState<number | null>(null);
 
-  const handlePhotoClick = (index: number) => setLightboxIndex(index);
-  const handleClose = () => setLightboxIndex(null);
-  const handlePrev = () =>
-    setLightboxIndex((prev) => (prev !== null ? Math.max(0, prev - 1) : null));
-  const handleNext = () =>
-    setLightboxIndex((prev) =>
-      prev !== null ? Math.min(PHOTOS.length - 1, prev + 1) : null,
-    );
+  const handlePhotoClick = useCallback((index: number) => setLightboxIndex(index), []);
+  const handleClose = useCallback(() => setLightboxIndex(null), []);
+  const handlePrev = useCallback(
+    () => setLightboxIndex((prev) => (prev !== null ? Math.max(0, prev - 1) : null)),
+    [],
+  );
+  const handleNext = useCallback(
+    () =>
+      setLightboxIndex((prev) =>
+        prev !== null ? Math.min(PHOTOS.length - 1, prev + 1) : null,
+      ),
+    [],
+  );
 
   /* ── Mobile: stacked cards ── */
   const isMobile =
@@ -483,66 +499,94 @@ export default function FiveFrames() {
       <section className="five-frames" ref={sectionRef} aria-label="Five photo frames">
         <SectionHeading />
 
-        {PHOTOS.map((photo, i) => {
-          const frame = FRAMES[i];
-          return (
-            <button
-              key={i}
-              type="button"
-              className={`five-frame-mobile five-frame-mobile--${frame.tone}`}
-              onClick={() => handlePhotoClick(i)}
-              aria-label={`Open ${frame.title} photo: ${frame.num} ${frame.title} ${frame.subtitle}`}
-            >
-              <div className="five-frame-mobile__img-container">
-                {i === 3 ? (
-                  /* Film: sprocket layout on mobile */
-                  <div className="five-frame-mobile__film">
-                    <div className="five-frame-mobile__sprockets">
-                      {Array.from({ length: 9 }).map((_, j) => (
-                        <div key={j} className="five-frame-mobile__sprocket" />
-                      ))}
-                    </div>
-                    <div className="five-frame-mobile__film-photo">
-                      <FrameImage photo={photo} sizes="100vw" className="five-frame__img" />
-                    </div>
-                    <div className="five-frame-mobile__sprockets">
-                      {Array.from({ length: 9 }).map((_, j) => (
-                        <div key={j} className="five-frame-mobile__sprocket" />
-                      ))}
-                    </div>
-                  </div>
-                ) : i === 4 ? (
-                  /* Widescreen: letterbox on mobile */
-                  <div className="five-frame-mobile__scope">
-                    <FrameImage photo={photo} sizes="100vw" className="five-frame__img" />
-                    <div className="five-frame-mobile__scope-bar five-frame-mobile__scope-bar--top" />
-                    <div className="five-frame-mobile__scope-bar five-frame-mobile__scope-bar--bottom" />
-                  </div>
-                ) : (
-                  /* Default: simple image */
-                  <FrameImage photo={photo} sizes="100vw" className="five-frame__img" />
-                )}
-              </div>
+        <div className="five-cards">
+          {PHOTOS.map((photo, i) => {
+            const frame = FRAMES[i];
+            const isFlipped = flipped === i;
 
-              <FrameCaption
-                {...frame}
-                className={`five-frame__caption--mobile${
-                  frame.tone === 'cinematic' ||
-                  frame.tone === 'film' ||
-                  frame.tone === 'widescreen'
-                    ? ' five-frame__caption--light'
-                    : ''
-                }`}
-              />
-            </button>
-          );
-        })}
+            return (
+              <div
+                key={i}
+                className={`five-card five-card--${frame.tone}${isFlipped ? ' is-flipped' : ''}`}
+              >
+                <div className="five-card__inner">
+                  {/* ── Front: photograph + caption ── */}
+                  <div
+                    className="five-card__face five-card__face--front"
+                    aria-hidden={isFlipped}
+                    inert={isFlipped}
+                  >
+                    <button
+                      type="button"
+                      className="five-card__open"
+                      onClick={() => handlePhotoClick(i)}
+                      aria-label={`Open photo ${i + 1} of 5: ${frame.title}`}
+                    >
+                      <span className="five-card__media">
+                        <FrameImage photo={photo} sizes="100vw" className="five-card__img" />
+                        <span className="five-card__scrim" aria-hidden="true" />
+                      </span>
+                    </button>
+
+                    <div className="five-card__caption five-frame__caption--mobile five-frame__caption--light">
+                      <FrameCaption {...frame} />
+                    </div>
+
+                    <button
+                      type="button"
+                      className="five-card__story-btn"
+                      onClick={() => setFlipped(i)}
+                      aria-label={`Read the story behind photo ${i + 1}`}
+                    >
+                      the story
+                    </button>
+                  </div>
+
+                  {/* ── Back: the story ── */}
+                  <div
+                    className="five-card__face five-card__face--back"
+                    aria-hidden={!isFlipped}
+                    inert={!isFlipped}
+                  >
+                    <div className="five-card__back-head">
+                      <span className="five-card__back-num">{frame.num}</span>
+                      <span className="five-card__back-eyebrow">the story</span>
+                    </div>
+
+                    <p className="five-card__story">{STORIES[i]}</p>
+
+                    <div className="five-card__back-actions">
+                      <button
+                        type="button"
+                        className="five-card__back-primary"
+                        onClick={() => {
+                          setFlipped(null);
+                          handlePhotoClick(i);
+                        }}
+                      >
+                        View the photo
+                      </button>
+                      <button
+                        type="button"
+                        className="five-card__back-ghost"
+                        onClick={() => setFlipped(null)}
+                      >
+                        Back to the frame
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
 
         <SectionFooter />
 
         {lightboxIndex !== null && (
           <PhotoLightbox
             photos={PHOTOS}
+            captions={STORIES}
             selectedIndex={lightboxIndex}
             onClose={handleClose}
             onPrev={handlePrev}
@@ -589,6 +633,7 @@ export default function FiveFrames() {
       {lightboxIndex !== null && (
         <PhotoLightbox
           photos={PHOTOS}
+          captions={STORIES}
           selectedIndex={lightboxIndex}
           onClose={handleClose}
           onPrev={handlePrev}

@@ -8,7 +8,9 @@ import CandleWish from './components/CandleWish';
 import MusicPlayer from './components/MusicPlayer';
 import Playground from './components/Playground';
 import MessageSection from './components/MessageSection';
+import GiftBoxes from './components/GiftBoxes';
 import Guestbook from './components/Guestbook';
+import ConstellationFinale from './components/ConstellationFinale';
 import Footer from './components/Footer';
 import AmbientBackground from './components/magic/AmbientBackground';
 import ScrollProgressBar from './components/ScrollProgressBar';
@@ -35,7 +37,9 @@ function App() {
       <MusicPlayer />
       <Playground />
       <MessageSection />
+      <GiftBoxes />
       <Guestbook />
+      <ConstellationFinale />
       <Footer />
     </div>
   );

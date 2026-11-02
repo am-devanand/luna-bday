@@ -1,9 +1,12 @@
 import { useEffect, useCallback, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import './PhotoLightbox.css';
 
 interface PhotoLightboxProps {
   photos: { src: string; alt: string; srcSet: string }[];
+  /** One short line per photo, shown under the image. */
+  captions?: string[];
   selectedIndex: number;
   onClose: () => void;
   onPrev: () => void;
@@ -34,12 +37,14 @@ function readKeepsakes(): KeepsakeItem[] {
 
 export default function PhotoLightbox({
   photos,
+  captions,
   selectedIndex,
   onClose,
   onPrev,
   onNext,
 }: PhotoLightboxProps) {
   const touchRef = useRef({ startX: 0, startY: 0 });
+  const overlayRef = useRef<HTMLDivElement>(null);
   const [prevIndex, setPrevIndex] = useState(selectedIndex);
   const [direction, setDirection] = useState(0);
   const [kept, setKept] = useState(false);
@@ -57,20 +62,19 @@ export default function PhotoLightbox({
     setPrevIndex(selectedIndex);
   }
 
-  /* Lock body scroll */
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = ''; };
-  }, []);
+  /* Focus trap, scroll lock, Escape and focus restoration. */
+  useFocusTrap(overlayRef, true, onClose);
 
-  /* Keyboard navigation */
+  /* Arrow-key navigation. Escape is owned by the focus trap. */
   const handleKey = useCallback((e: KeyboardEvent) => {
-    switch (e.key) {
-      case 'Escape': onClose(); break;
-      case 'ArrowLeft': onPrev(); break;
-      case 'ArrowRight': onNext(); break;
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      onPrev();
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      onNext();
     }
-  }, [onClose, onPrev, onNext]);
+  }, [onPrev, onNext]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKey);
@@ -123,6 +127,7 @@ export default function PhotoLightbox({
   return (
     <AnimatePresence>
       <motion.div
+        ref={overlayRef}
         className="lightbox-overlay"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -130,7 +135,7 @@ export default function PhotoLightbox({
         onClick={onClose}
         role="dialog"
         aria-modal="true"
-        aria-label="Photo viewer"
+        aria-label={`Photo viewer, photo ${selectedIndex + 1} of ${photos.length}`}
       >
         {/* Close button */}
         <button className="lightbox__close" type="button" onClick={(e) => { e.stopPropagation(); onClose(); }} aria-label="Close">
@@ -164,40 +169,54 @@ export default function PhotoLightbox({
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          <AnimatePresence mode="wait" custom={direction}>
-            <picture>
-              <source type="image/avif" srcSet={photos[selectedIndex]?.srcSet} sizes="90vw" />
-              <motion.img
-                key={selectedIndex}
-                src={photos[selectedIndex]?.src}
-                alt={photos[selectedIndex]?.alt ?? ''}
-                className="lightbox__image"
-                custom={direction}
-                variants={variants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              />
-            </picture>
+          <AnimatePresence mode="wait" custom={direction} initial={false}>
+            <motion.div
+              key={selectedIndex}
+              className="lightbox__frame"
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <picture>
+                <source type="image/avif" srcSet={photos[selectedIndex]?.srcSet} sizes="90vw" />
+                <img
+                  src={photos[selectedIndex]?.src}
+                  alt={photos[selectedIndex]?.alt ?? ''}
+                  className="lightbox__image"
+                />
+              </picture>
+            </motion.div>
           </AnimatePresence>
         </div>
+
+        {captions?.[selectedIndex] && (
+          <p className="lightbox__caption" aria-live="polite">
+            {captions[selectedIndex]}
+          </p>
+        )}
 
         {/* Keep this photo */}
         <button
           className="lightbox__keep"
           type="button"
           onClick={(e) => { e.stopPropagation(); handleKeep(); }}
-          aria-label="Keep this photo"
-          aria-live="polite"
+          aria-label={kept ? 'Photo kept' : 'Keep this photo'}
+          aria-pressed={kept}
         >
           {kept ? 'Kept ✓' : 'Keep this photo'}
         </button>
 
         {/* Counter */}
-        <div className="lightbox__counter">
+        <div className="lightbox__counter" aria-live="polite">
           {selectedIndex + 1} / {photos.length}
         </div>
+
+        <p className="lightbox__hint" aria-hidden="true">
+          ← → to move · Esc to close
+        </p>
       </motion.div>
     </AnimatePresence>
   );

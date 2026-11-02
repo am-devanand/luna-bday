@@ -6,7 +6,7 @@ const KEEPSAKE_KEY = 'luna-keepsakes-v1';
 
 interface KeepsakeItem {
   id: string;
-  kind: 'photo' | 'wish' | 'candle';
+  kind: 'photo' | 'wish' | 'candle' | 'promise';
   label: string;
   imageSrc?: string;
   ts: number;
