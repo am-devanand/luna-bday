@@ -57,9 +57,69 @@
   --section-padding-x-mobile: 1rem;
 }
 
+/* ============================================================
+   DESIGN SYSTEM v2 — "Luxury editorial + romantic fantasy"
+   Additive layer. The v1 tokens above stay authoritative for every
+   existing component, so nothing re-skins by accident. New work
+   (cake, gifts, bottles, finale) reads from these names.
+   ============================================================ */
+:root {
+  /* ── Palette ── */
+  --ivory-0: #FDFAF6;        /* page base */
+  --ivory-1: #F8F0E7;        /* alternating section */
+  --blush-1: #F3E3DC;        /* soft panels, hover washes */
+  --blush-2: #E7CFC5;        /* hairlines, pressed-flower shapes */
+  --dusty-rose: #B26E63;     /* large accent text, icons, active */
+  --dusty-rose-deep: #8A4B42;/* AA-safe accent copy on ivory */
+  --champagne: #D8B98D;      /* metallic rules, wax highlights */
+  --champagne-light: #F3DFC0;
+  --champagne-deep: #A97C4F;
+  --ink: #2A211C;            /* body + headings */
+  --ink-soft: #6E5D52;       /* captions, metadata */
+  --ink-faint: #98877A;      /* only for ≥18px / decorative */
+
+  /* ── Materials ── */
+  --glass-bg: rgba(255, 252, 247, 0.62);
+  --glass-bg-strong: rgba(255, 252, 247, 0.86);
+  --glass-border: rgba(255, 255, 255, 0.55);
+  --hairline: rgba(42, 33, 28, 0.12);
+  --hairline-soft: rgba(42, 33, 28, 0.07);
+  --wax: radial-gradient(circle at 38% 32%, #D8A24A 0%, #B9852F 42%, #8A5A1E 100%);
+  --metal-champagne: linear-gradient(135deg, #F3DFC0 0%, #D8B98D 48%, #A97C4F 100%);
+  --paper-warm: linear-gradient(180deg, #FFFCF7 0%, #F8F0E7 100%);
+
+  /* ── Type ── */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-hand: 'Caveat', 'Segoe Script', cursive;
+  --measure: 68ch;
+  --tracking-eyebrow: 0.18em;
+
+  /* ── Layout ── */
+  --container-prose: 680px;
+  --container-editorial: 1100px;
+  --container-gallery: 1280px;
+  --section-rhythm: clamp(4.5rem, 9vw, 8rem);
+  --gutter: clamp(1.25rem, 5vw, 2.5rem);
+
+  /* ── Radii v2 (v1 names kept) ── */
+  --radius-xs: 2px;
+  --radius-2xl: 24px;
+  --radius-pill: 999px;
+
+  /* ── Motion v2 ── */
+  --motion-fast: 0.16s;
+  --motion-base: 0.28s;
+  --motion-slow: 0.56s;
+  --motion-cinematic: 1s;
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-soft-spring: cubic-bezier(0.34, 1.1, 0.64, 1);
+}
+
 /* === Base === */
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -73,6 +133,66 @@ body {
 h1, h2, h3, h4 {
   font-family: 'Playfair Display', Georgia, serif;
   font-weight: 600;
+}
+
+/* === Type utilities (v2) === */
+.u-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.u-h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.9rem, 3.6vw, 2.9rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.u-lead {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: clamp(1.0625rem, 1.2vw, 1.125rem);
+  line-height: 1.7;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+.u-body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.u-hand {
+  font-family: var(--font-hand);
+  font-size: 1.5rem;
+  line-height: 1.2;
+  color: var(--dusty-rose);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--dusty-rose-deep);
+}
+
+/* === Focus === */
+:where(a, button, [role='button'], input, textarea, select, summary):focus-visible {
+  outline: 2px solid var(--dusty-rose-deep);
+  outline-offset: 3px;
+  border-radius: var(--radius-xs);
 }
 
 /* === Custom Utilities === */

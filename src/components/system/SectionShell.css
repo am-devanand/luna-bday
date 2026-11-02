@@ -1,0 +1,78 @@
+/* ============================================================
+   SectionShell — shared chapter frame (v2)
+   ============================================================ */
+
+.section-shell {
+  position: relative;
+  width: 100%;
+  padding-block: var(--section-rhythm);
+  padding-inline: var(--gutter);
+  background: transparent;
+}
+
+.section-shell--flush {
+  padding-block: 0;
+}
+
+/* Tones — all deliberately quiet; the photography is the loud part. */
+.section-shell[data-tone='ivory'] {
+  background: var(--ivory-0);
+}
+
+.section-shell[data-tone='blush'] {
+  background: linear-gradient(180deg, var(--ivory-0) 0%, var(--blush-1) 18%, var(--blush-1) 82%, var(--ivory-0) 100%);
+}
+
+.section-shell[data-tone='champagne'] {
+  background: linear-gradient(180deg, var(--ivory-1) 0%, var(--blush-1) 50%, var(--ivory-1) 100%);
+}
+
+.section-shell[data-tone='ink'] {
+  background: #1E1713;
+  color: var(--ivory-0);
+}
+
+.section-shell[data-tone='ink'] .eyebrow {
+  color: var(--champagne);
+}
+
+.section-shell__inner {
+  margin-inline: auto;
+  width: 100%;
+}
+
+.section-shell--prose > .section-shell__inner {
+  max-width: var(--container-prose);
+}
+
+.section-shell--editorial > .section-shell__inner {
+  max-width: var(--container-editorial);
+}
+
+.section-shell--gallery > .section-shell__inner {
+  max-width: var(--container-gallery);
+}
+
+.section-shell--full > .section-shell__inner {
+  max-width: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Soft ivory → section seam so adjacent chapters never cut hard. */
+  .section-shell[data-tone='blush']::before,
+  .section-shell[data-tone='champagne']::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--hairline), transparent);
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .section-shell {
+    padding-block: clamp(3.5rem, 11vw, 5rem);
+  }
+}
