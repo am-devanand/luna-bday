@@ -27,13 +27,13 @@ interface Particle {
 }
 
 /* ─── Config ─────────────────────────────────────────── */
-const COLORS = ['#C8A46B', '#E0C99A', '#A8884D', '#F6F1E8', '#FFFFFF'];
+const COLORS = ['#B26E63', '#D8B98D', '#A97C4F', '#8A4B42', '#F3DFC0', '#FFFDF7'];
 
 const BURST_CONFIGS: Record<BurstLevel, { count: number; duration: number }> = {
   tiny: { count: 5, duration: 1200 },
   micro: { count: 8, duration: 1500 },
   small: { count: 18, duration: 2000 },
-  celebration: { count: 30, duration: 3000 },
+  celebration: { count: 36, duration: 4500 },
 };
 
 function createParticle(originX: number, originY: number): Particle {
