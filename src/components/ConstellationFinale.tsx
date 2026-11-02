@@ -257,14 +257,16 @@ export default function ConstellationFinale() {
             {statusLabel}
           </p>
 
-          <button
-            type="button"
-            className="constellation__replay"
-            onClick={replay}
-            disabled={!inView}
-          >
-            {complete ? 'Trace it again' : 'Trace the stars'}
-          </button>
+          {!reduceMotion && (
+            <button
+              type="button"
+              className="constellation__replay"
+              onClick={replay}
+              disabled={!inView}
+            >
+              {complete ? 'Trace it again' : 'Trace the stars'}
+            </button>
+          )}
         </Reveal>
 
         <Reveal className="constellation__copy" delay={0.12}>
