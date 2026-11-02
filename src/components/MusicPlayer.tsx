@@ -2,7 +2,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, useInView, useAnimation, type Variants } from 'framer-motion';
 import './MusicPlayer.css';
 
-const AUDIO_SRC = '/music/perfect.mp3';
+const AUDIO_SRC = '/music/the-blessing.mp3';
 
 function formatTime(seconds: number): string {
   if (!isFinite(seconds) || seconds < 0) return '0:00';
@@ -202,7 +202,7 @@ export default function MusicPlayer() {
         initial="hidden"
         animate={isInView ? 'visible' : 'hidden'}
       >
-        The song that is ours
+        A blessing, over you
       </motion.p>
 
       <motion.aside
@@ -212,7 +212,7 @@ export default function MusicPlayer() {
         animate={isInView ? 'visible' : 'hidden'}
       >
         <p className="music-player__dedication-title">On repeat, for Luna</p>
-        <p className="music-player__dedication-sub">Perfect by Ed Sheeran — the song that always finds its way back to us. Pressed here as SIDE 19.</p>
+        <p className="music-player__dedication-sub">The Blessing — Kari Jobe, Cody Carnes &amp; Elevation Worship. A prayer for your nineteenth year, pressed here as SIDE 19.</p>
         <p className="music-player__dedication-cue">press play when…</p>
       </motion.aside>
 
@@ -268,8 +268,8 @@ export default function MusicPlayer() {
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
           >
-            <h3 className="vinyl__track-name">Perfect</h3>
-            <p className="vinyl__artist">Ed Sheeran</p>
+            <h3 className="vinyl__track-name">The Blessing</h3>
+            <p className="vinyl__artist">Kari Jobe &amp; Cody Carnes</p>
             <ElapsedCounter currentTime={currentTime} isPlaying={isPlaying} />
           </motion.div>
 

@@ -8,7 +8,9 @@
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  background: #0a0806; /* Warm-black like fine wrapping paper */
+  background:
+    radial-gradient(ellipse 36% 66% at 58% 46%, rgba(196, 136, 106, 0.2), transparent 72%),
+    #0a0806; /* Warm-black like fine wrapping paper */
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -158,8 +160,9 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: 50% 28%;
+  object-fit: contain;
+  object-position: 58% 50%;
+  filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.5));
 }
 
 .hero-section__bg--cinematic {
@@ -662,10 +665,10 @@
     );
   }
 
-  /* Frame her face: with cover-crop on a tall portrait the 28% anchor
-     sliced the top of her head. */
+  /* Contained portrait: nudge her toward the right third so the left
+     column of type sits on the dark backing rather than her face. */
   .hero-section:not(.hero-section--compact) .hero-section__bg {
-    object-position: 50% 12%;
+    object-position: 58% 50%;
   }
 
   .hero-section:not(.hero-section--compact) .hero-section__caption-scrim {

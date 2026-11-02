@@ -24,7 +24,7 @@ npm run preview
 | Copy, letter, reasons | `src/components/*.tsx` |
 | Hero + frame photos | `public/images/luna/` |
 | Playground photos | `public/images/moments/` |
-| Music | `public/music/perfect.mp3` |
+| Music | `public/music/the-blessing.mp3` |
 | Gift voice notes | `public/audio/voice-note-01.mp3`, `voice-note-02.mp3` |
 | Page metadata | `index.html` |
 
