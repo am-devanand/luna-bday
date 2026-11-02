@@ -10,35 +10,35 @@ const PHOTO_FILES = [
     width: 720,
     height: 1600,
     variants: [480, 720],
-    alt: 'Luna in a pink floral dress, smiling against a wall of green leaves',
+    alt: 'Swethaaa in a pink floral dress, smiling against a wall of green leaves',
   },
   {
     file: 'frame-02',
     width: 899,
     height: 1599,
     variants: [480, 899],
-    alt: 'A black-and-white portrait of Luna smiling inside a heart-shaped frame',
+    alt: 'A black-and-white portrait of Swethaaa smiling inside a heart-shaped frame',
   },
   {
     file: 'frame-03',
     width: 899,
     height: 1599,
     variants: [480, 899],
-    alt: 'Luna in a lilac tee and patterned headband, smiling softly at the camera',
+    alt: 'Swethaaa in a lilac tee and patterned headband, smiling softly at the camera',
   },
   {
     file: 'frame-04',
     width: 721,
     height: 1600,
     variants: [480, 720],
-    alt: 'Luna in a red shirt, smiling with her head tilted',
+    alt: 'Swethaaa in a red shirt, smiling with her head tilted',
   },
   {
     file: 'frame-05',
     width: 899,
     height: 1599,
     variants: [480, 899],
-    alt: 'A black-and-white close-up of Luna laughing, a pink hibiscus beside her face',
+    alt: 'A black-and-white close-up of Swethaaa laughing, a pink hibiscus beside her face',
   },
 ];
 
@@ -94,12 +94,12 @@ const FRAMES = [
 ];
 
 /* Short stories for the card backs and the lightbox. Adapted from the
-   gallery notes written for Luna — no invented anecdotes. */
+   gallery notes written for Swethaaa — no invented anecdotes. */
 const STORIES = [
   'Your signature warm smile — the kind that tells people they are safe around you.',
   'A quiet, thoughtful gaze. You feel things deeply, and you carry so much care for others.',
   'The headband selfie. Graceful in the most casual moments, without even trying.',
-  'The warm look you give when you are listening closely. You are a rare listener, Luna.',
+  'The warm look you give when you are listening closely. You are a rare listener, Swethaaa.',
   'The black-and-white frame with the pink hibiscus — your love for nature’s small, simple details.',
 ];
 
@@ -442,7 +442,7 @@ function FrameCinemaScope({
 function SectionHeading() {
   return (
     <div className="five-frames__header">
-      <span className="five-frames__eyebrow">For Luna</span>
+      <span className="five-frames__eyebrow">For Swethaaa</span>
       <h2 className="five-frames__title">Five Frames</h2>
       <div className="five-frames__divider">
         <span className="five-frames__divider-line" />

@@ -211,7 +211,7 @@ export default function MusicPlayer() {
         initial="hidden"
         animate={isInView ? 'visible' : 'hidden'}
       >
-        <p className="music-player__dedication-title">On repeat, for Luna</p>
+        <p className="music-player__dedication-title">On repeat, for Swethaaa</p>
         <p className="music-player__dedication-sub">The Blessing — Kari Jobe, Cody Carnes &amp; Elevation Worship. A prayer for your nineteenth year, pressed here as SIDE 19.</p>
         <p className="music-player__dedication-cue">press play when…</p>
       </motion.aside>
@@ -253,7 +253,7 @@ export default function MusicPlayer() {
                   style={{ transform: `translate(-50%, -50%) rotate(${labelRotation}deg)` }}
                 >
                   <span className="vinyl__label-text">SIDE 19</span>
-                  <span className="vinyl__label-sub">For Luna</span>
+                  <span className="vinyl__label-sub">For Swethaaa</span>
                 </div>
               </motion.div>
             </div>

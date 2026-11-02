@@ -191,7 +191,7 @@ export default function SealedEntry() {
         {/* Card content */}
         <div className="sealed-entry__card">
           <p className="sealed-entry__eyebrow">A birthday gift</p>
-          <h1 className="sealed-entry__headline">For Luna</h1>
+          <h1 className="sealed-entry__headline">For Swethaaa</h1>
           <p className="sealed-entry__body">
             A little universe made just for you.<br />Break the seal when you&apos;re ready.
           </p>
@@ -211,7 +211,7 @@ export default function SealedEntry() {
               aria-label="Break the seal and enter"
               autoFocus
             >
-              <span className="sealed-entry__seal-emblem" aria-hidden="true">L</span>
+              <span className="sealed-entry__seal-emblem" aria-hidden="true">S</span>
             </button>
 
             <span

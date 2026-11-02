@@ -83,7 +83,7 @@ export default function HappyBirthday() {
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
         >
-          Luna
+          Swethaaa
         </motion.p>
 
         {/* Age */}

@@ -191,7 +191,7 @@ export default function ConstellationFinale() {
             className="constellation__svg"
             viewBox={`0 0 ${VIEW} ${VIEW}`}
             role="img"
-            aria-label="A heart traced by nineteen stars, closing around the name Luna"
+            aria-label="A heart traced by nineteen stars, closing around the name Swethaaa"
           >
             <g aria-hidden="true">
               {DUST.map((star) => (
@@ -249,7 +249,7 @@ export default function ConstellationFinale() {
 
           <div className={`constellation__core${complete ? ' is-visible' : ''}`} aria-hidden={!complete}>
             <span className="constellation__core-num">19</span>
-            <span className="constellation__core-name">Luna</span>
+            <span className="constellation__core-name">Swethaaa</span>
             <span className="constellation__core-note">my whole sky</span>
           </div>
 
@@ -281,14 +281,14 @@ export default function ConstellationFinale() {
             softer. Follow them and they close into the only shape that matters.
           </p>
 
-          <div className="constellation__countdown" aria-label="Countdown to Luna's birthday">
+          <div className="constellation__countdown" aria-label="Countdown to Swethaaa's birthday">
             <p className="constellation__countdown-kicker">
               {remaining.passed ? 'It has begun' : 'Until 06 · 11 · 2026'}
             </p>
 
             {remaining.passed ? (
               <p className="constellation__arrived">
-                It&apos;s your day, Luna. The candles are lit, the stars showed up, and so did I.
+                It&apos;s your day, Swethaaa. The candles are lit, the stars showed up, and so did I.
               </p>
             ) : (
               <div className="constellation__clock">

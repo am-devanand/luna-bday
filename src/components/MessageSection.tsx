@@ -68,7 +68,7 @@ export default function MessageSection() {
                   aria-label="Open envelope"
                   data-cursor-label="OPEN"
                 >
-                  <span className="message-envelope__seal-emblem">L</span>
+                  <span className="message-envelope__seal-emblem">S</span>
                 </button>
 
                 <div className={`message-envelope__seal-ring ${sealRing ? 'message-envelope__seal-ring--active' : ''}`} aria-hidden="true" />
@@ -79,7 +79,7 @@ export default function MessageSection() {
                 </div>
 
                 <div className="message-envelope__content">
-                  <p className="message-envelope__address">For Luna</p>
+                  <p className="message-envelope__address">For Swethaaa</p>
                   <p className="message-envelope__address-sub">A birthday letter, sealed with love</p>
                   <p className="message-envelope__address-line">Open when ready</p>
                   <button
@@ -106,9 +106,9 @@ export default function MessageSection() {
             >
               <div className="message-letter__paper">
                 <div className="message-section__ornament" aria-hidden="true" />
-                <h2 className="message-section__heading">For Luna</h2>
+                <h2 className="message-section__heading">For Swethaaa</h2>
                 <p className="message-section__text">
-                  Hi Luna,
+                  Hi Swethaaa,
                 </p>
                 <p className="message-section__text">
                   Nineteen. My favourite person is nineteen today, and I still
@@ -144,7 +144,7 @@ export default function MessageSection() {
                   heavy, put it down for a while — I am right here.
                 </p>
                 <p className="message-section__text message-section__text--sign">
-                  Happy nineteenth, my Luna. With all my heart, always,<br />
+                  Happy nineteenth, my Swethaaa. With all my heart, always,<br />
                   <span className="message-section__signature">Dev</span>
                 </p>
                 <div className="message-section__ornament" aria-hidden="true" />

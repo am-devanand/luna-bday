@@ -30,7 +30,7 @@ export default function Reasons() {
   const reduce = useReducedMotion();
 
   return (
-    <section className="reasons" ref={ref} aria-label="Nineteen things I love about Luna">
+    <section className="reasons" ref={ref} aria-label="Nineteen things I love about Swethaaa">
       <div className="reasons__glow" aria-hidden="true" />
       <div className="reasons__inner">
         <motion.p

@@ -200,7 +200,7 @@ function ScratchCard({ onReveal, onReset }: { onReveal: () => void; onReset?: ()
       <div className="scratch-card__wrapper">
         <div className="scratch-card__message">
           <span className="scratch-card__msg-line">Happy 19th!</span>
-          <span className="scratch-card__msg-sub">Here&apos;s to nineteen, Luna.</span>
+          <span className="scratch-card__msg-sub">Here&apos;s to nineteen, Swethaaa.</span>
         </div>
         <canvas
           ref={canvasRef}
@@ -275,7 +275,7 @@ function PhotoDeveloper({ onDevelop }: { onDevelop: (photoSrc: string) => void }
               animate={{ filter: 'brightness(1) sepia(0) saturate(1)' }}
               transition={{ duration: 2, ease: 'easeOut' }}
             >
-              <img src={photo} alt="A developed photograph of Luna" className="photo-developer__img" />
+              <img src={photo} alt="A developed photograph of Swethaaa" className="photo-developer__img" />
               <div className="photo-developer__grain" />
             </motion.div>
           )}
@@ -285,7 +285,7 @@ function PhotoDeveloper({ onDevelop }: { onDevelop: (photoSrc: string) => void }
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              <img src={photo} alt="A developed photograph of Luna" className="photo-developer__img" />
+              <img src={photo} alt="A developed photograph of Swethaaa" className="photo-developer__img" />
               <span className="photo-developer__frame-label">
                 FRAME {(frameNum).toString().padStart(2, '0')} / 05
               </span>

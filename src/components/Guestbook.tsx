@@ -27,7 +27,7 @@ const DEFAULT_WISHES: Wish[] = [
   {
     name: 'Dev',
     message:
-      'Happy nineteenth, Luna. I hope this little corner of the internet reminds you how loved you are — today, and on every ordinary day after.',
+      'Happy nineteenth, Swethaaa. I hope this little corner of the internet reminds you how loved you are — today, and on every ordinary day after.',
     ts: new Date('2026-11-06T09:00:00').getTime(),
     localOnly: false,
   },
@@ -39,7 +39,26 @@ const loadWishes = (): Wish[] => {
     const raw = localStorage.getItem(WISH_STORAGE_KEY);
     if (!raw) return DEFAULT_WISHES;
     const parsed: unknown = JSON.parse(raw);
-    return Array.isArray(parsed) && parsed.length > 0 ? (parsed as Wish[]) : DEFAULT_WISHES;
+    if (!Array.isArray(parsed) || parsed.length === 0) return DEFAULT_WISHES;
+
+    /* Wishes saved before the rename may still say the old name. */
+    const wishes = parsed as Wish[];
+    let renamed = false;
+    const migrated = wishes.map((wish) => {
+      if (typeof wish.message !== 'string' || !wish.message.includes('Luna')) return wish;
+      renamed = true;
+      return { ...wish, message: wish.message.replace(/Luna/g, 'Swethaaa') };
+    });
+
+    if (renamed) {
+      try {
+        localStorage.setItem(WISH_STORAGE_KEY, JSON.stringify(migrated));
+      } catch {
+        /* Show the migrated copy even if persistence is unavailable. */
+      }
+    }
+
+    return migrated;
   } catch {
     return DEFAULT_WISHES;
   }
@@ -242,7 +261,7 @@ export default function Guestbook() {
     <section
       ref={sectionRef}
       className="guestbook"
-      aria-label="Leave a birthday wish for Luna"
+      aria-label="Leave a birthday wish for Swethaaa"
     >
       <motion.div
         className="guestbook__inner"
@@ -263,7 +282,7 @@ export default function Guestbook() {
         </div>
 
         <h2 className="guestbook__heading">Leave a Wish</h2>
-        <p className="guestbook__subtitle">Write something for Luna</p>
+        <p className="guestbook__subtitle">Write something for Swethaaa</p>
 
         {/* Decorative divider */}
         <div className="guestbook__divider" aria-hidden="true">

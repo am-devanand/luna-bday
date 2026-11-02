@@ -309,7 +309,7 @@ export default function GiftBoxes() {
                   <figure className="gift-sheet__polaroid">
                     <img
                       src="/images/luna/frame-02.jpg"
-                      alt="Luna smiling inside a heart-shaped frame, in black and white"
+                      alt="Swethaaa smiling inside a heart-shaped frame, in black and white"
                       width={899}
                       height={1599}
                       loading="lazy"

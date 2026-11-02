@@ -1,6 +1,6 @@
-# Luna · 19
+# Swethaaa · 19
 
-A candlelit birthday site for Luna — sealed entry, a cinematic photo hero, nineteen
+A candlelit birthday site for Swethaaa — sealed entry, a cinematic photo hero, nineteen
 reasons, five framed photographs with stories on the back, a three-tier cake wish,
 three gifts (two real voice notes and a promise), a letter, a guestbook, a
 constellation finale and a small playground. Cream, rose gold and warm film grain

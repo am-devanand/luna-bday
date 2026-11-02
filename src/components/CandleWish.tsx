@@ -92,7 +92,7 @@ export default function CandleWish() {
     const entry: CandleKeepsake = {
       id: `candle-${Date.now()}`,
       kind: 'candle',
-      label: 'A birthday wish for Luna',
+      label: 'A birthday wish for Swethaaa',
       ts: Date.now(),
     };
     try {
@@ -137,7 +137,7 @@ export default function CandleWish() {
     <section className={`cw cw--${status}`} aria-label="Candle wish ritual">
       <div className="cw__inner">
         <Eyebrow className="cw__eyebrow">Make a wish</Eyebrow>
-        <h2 className="cw__headline">Light a Wish for Luna</h2>
+        <h2 className="cw__headline">Light a Wish for Swethaaa</h2>
         <p className="cw__subline">
           Five candles for nineteen years of you. Tap the cake — or use your microphone and blow.
         </p>
@@ -164,7 +164,7 @@ export default function CandleWish() {
                 <div className="cake__frosting" />
                 <div className="cake__top" />
                 <div className="cake__bead" />
-                <span className="cake__script">Happy Birthday Luna</span>
+                <span className="cake__script">Happy Birthday Swethaaa</span>
               </div>
 
               {/* ── Tier 2 — middle ── */}
@@ -256,7 +256,7 @@ export default function CandleWish() {
         {wishVisible && (
           <div ref={wishRef} className="cw__wish" role="status" aria-live="polite">
             <span className="cw__wish-kicker">Wish sealed</span>
-            <p className="cw__wish-title">Happy nineteenth, my Luna.</p>
+            <p className="cw__wish-title">Happy nineteenth, my Swethaaa.</p>
             <p className="cw__wish-sub">
               Nineteen years of you — and I would still choose every single one.
             </p>

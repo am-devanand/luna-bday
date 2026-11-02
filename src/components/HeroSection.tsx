@@ -30,7 +30,7 @@ const T = {
   WORD_2: 2980,        // "19TH"
   WORD_3: 3260,        // "BIRTHDAY" + shimmer sweep
   DIVIDER: 3480,       // Gold line draws in
-  NAME: 3650,          // "Luna" — the emotional anchor
+  NAME: 3650,          // "Swethaaa" — the emotional anchor
   SUBTITLE: 3840,      // Subtitle whispers in
   BUTTON_DOT: 3960,    // Button: tiny gold dot
   BUTTON_OUTLINE: 4080,// Button: outline ring expands
@@ -699,7 +699,7 @@ export default function HeroSection() {
             <span className="hero-section__divider-diamond" />
           </div>
           <h1 className="hero-section__title">
-            <span className="hero-section__title-gradient">Luna</span>
+            <span className="hero-section__title-gradient">Swethaaa</span>
           </h1>
           <p className="hero-section__subtitle">A little universe, lit only for you.</p>
           {!autoMerge && !liveAuto && <EnterButton enchanted={false} dispersing={false} inhaling={false} buttonRef={buttonRef} onEnter={handleEnter} />}
@@ -945,7 +945,7 @@ export default function HeroSection() {
                   animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                   transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <span className="hero-section__title-gradient">Luna</span>
+                  <span className="hero-section__title-gradient">Swethaaa</span>
                   {/* Light sweep across the name */}
                   <span className="hero-section__title-sweep" aria-hidden="true" />
                 </motion.h1>
@@ -1103,7 +1103,7 @@ export default function HeroSection() {
               <span className="hero-section__divider-diamond" />
             </div>
             <h1 className="hero-section__title hero-section__post-item" style={{ '--i': 2 } as CSSProperties}>
-              <span className="hero-section__title-gradient">Luna</span>
+              <span className="hero-section__title-gradient">Swethaaa</span>
             </h1>
             <p className="hero-section__subtitle hero-section__post-item" style={{ '--i': 3 } as CSSProperties}>
               A little universe, lit only for you.

@@ -17,7 +17,27 @@ function readKeepsakes(): KeepsakeItem[] {
     const raw = localStorage.getItem(KEEPSAKE_KEY);
     if (!raw) return [];
     const parsed: unknown = JSON.parse(raw);
-    return Array.isArray(parsed) ? (parsed as KeepsakeItem[]) : [];
+    if (!Array.isArray(parsed)) return [];
+
+    /* Keepsakes saved before the rename still carry the old name. Bring
+       them forward once so the strip never shows a stale label. */
+    const items = parsed as KeepsakeItem[];
+    let renamed = false;
+    const migrated = items.map((item) => {
+      if (typeof item.label !== 'string' || !item.label.includes('Luna')) return item;
+      renamed = true;
+      return { ...item, label: item.label.replace(/Luna/g, 'Swethaaa') };
+    });
+
+    if (renamed) {
+      try {
+        localStorage.setItem(KEEPSAKE_KEY, JSON.stringify(migrated));
+      } catch {
+        /* Display the migrated labels even if the write fails. */
+      }
+    }
+
+    return migrated;
   } catch {
     return [];
   }

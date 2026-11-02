@@ -118,8 +118,8 @@ export default function Footer() {
 
       {/* Closing beat: keepsake strip + sealed line */}
       <KeepsakeStrip />
-      <p className="footer__sealed">Built for one person. Happy birthday, Luna.</p>
-      {/* Main text: "Made for Luna" */}
+      <p className="footer__sealed">Built for one person. Happy birthday, Swethaaa.</p>
+      {/* Main text: "Made for Swethaaa" */}
       <motion.p
         className="footer__main"
         variants={textVariants(0)}
@@ -132,7 +132,7 @@ export default function Footer() {
           className="footer__nineteen"
           onClick={handleNineteenClick}
         >
-          {easterEgg ? '✨' : 'Luna'}
+          {easterEgg ? '✨' : 'Swethaaa'}
         </button>
       </motion.p>
 
