@@ -308,12 +308,14 @@ function PhotoDeveloper({ onDevelop }: { onDevelop: (photoSrc: string) => void }
 
 /* ─── Teddy Bear (Bear Hug) ──────────────────────────── */
 const TEDDY_WORDS = [
-  'thoughtful', 'sunshine', 'kind-hearted', 'brilliant',
-  'radiant', 'genuine', 'sweet', 'irreplaceable',
+  'cute', 'sweet', 'beautiful', 'caring', 'gorgeous',
+  'adorable', 'precious', 'thoughtful', 'kind-hearted',
+  'radiant', 'irreplaceable', 'so loved',
 ];
 
 function TeddyBear({ onHug }: { onHug: (word: string) => void }) {
   const [hugs, setHugs] = useState(0);
+  const hugsRef = useRef(0);
   const [hugging, setHugging] = useState(false);
   const [squishKey, setSquishKey] = useState(0);
   const [kept, setKept] = useState(false);
@@ -330,16 +332,19 @@ function TeddyBear({ onHug }: { onHug: (word: string) => void }) {
   }, []);
 
   const hug = useCallback(() => {
-    const word = TEDDY_WORDS[hugs % TEDDY_WORDS.length];
+    /* Read the next compliment from a ref so fast taps always advance
+       instead of replaying a stale render's word. */
+    const word = TEDDY_WORDS[hugsRef.current % TEDDY_WORDS.length];
+    hugsRef.current += 1;
     onHug(word);
-    setHugs((h) => h + 1);
+    setHugs(hugsRef.current);
     setKept(true);
     if (reducedMotion) return;
     setSquishKey((k) => k + 1);
     setHugging(true);
     if (hugTimer.current) window.clearTimeout(hugTimer.current);
     hugTimer.current = window.setTimeout(() => setHugging(false), 650);
-  }, [hugs, onHug, reducedMotion]);
+  }, [onHug, reducedMotion]);
 
   const word = TEDDY_WORDS[(hugs - 1 + TEDDY_WORDS.length) % TEDDY_WORDS.length];
 
@@ -362,7 +367,7 @@ function TeddyBear({ onHug }: { onHug: (word: string) => void }) {
               <span className="teddy__bubble-hint">tap for a hug</span>
             ) : (
               <>
-                <span className="teddy__bubble-eyebrow">you are</span>
+                <span className="teddy__bubble-eyebrow">you are</span>{' '}
                 <span className="teddy__bubble-word">{word}!</span>
               </>
             )}
