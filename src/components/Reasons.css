@@ -1,0 +1,175 @@
+/* ============================================================
+   Reasons — nineteen small truths, kept in candlelight
+   ============================================================ */
+
+.reasons {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-gallery, #f6ede5);
+  padding: clamp(4rem, 9vw, 7rem) clamp(1.25rem, 5vw, 2rem);
+}
+
+.reasons::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, var(--bg, #faf4ee) 0%, transparent 10%, transparent 90%, var(--bg-playground, #f3ede6) 100%);
+  pointer-events: none;
+}
+
+.reasons__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(1100px, 130vw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(196, 136, 106, 0.09) 0%,
+    rgba(196, 136, 106, 0.04) 35%,
+    transparent 68%
+  );
+  pointer-events: none;
+}
+
+.reasons__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1040px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.reasons__eyebrow {
+  margin: 0 0 0.75rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: clamp(0.6rem, 1.1vw, 0.7rem);
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--gold, #c4886a);
+}
+
+.reasons__title {
+  margin: 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 5.5vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1.12;
+  color: var(--text, #2e2620);
+  text-wrap: balance;
+}
+
+.reasons__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(80px, 12vw, 150px);
+  height: 1px;
+  margin: 1.5rem auto 1rem;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--gold, #c4886a) 30%,
+    var(--gold-light, #edcfb3) 50%,
+    var(--gold, #c4886a) 70%,
+    transparent 100%
+  );
+  transform-origin: center;
+}
+
+.reasons__divider-diamond {
+  width: 4px;
+  height: 4px;
+  background: var(--gold, #c4886a);
+  transform: rotate(45deg);
+  box-shadow: 0 0 8px rgba(196, 136, 106, 0.45);
+}
+
+.reasons__subtitle {
+  margin: 0 0 clamp(2rem, 4vw, 3rem);
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  color: var(--text-light, #8a7468);
+}
+
+.reasons__list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  margin: 0 auto;
+  padding: 0;
+  text-align: left;
+  max-width: 920px;
+  border-top: 1px solid rgba(196, 136, 106, 0.16);
+}
+
+.reasons__item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  padding: 1rem 1.25rem 1rem 0.25rem;
+  border-bottom: 1px solid rgba(196, 136, 106, 0.16);
+}
+
+.reasons__item:nth-child(odd) {
+  padding-right: 2rem;
+  border-right: 1px solid rgba(196, 136, 106, 0.16);
+}
+
+.reasons__item:nth-child(even) {
+  padding-left: 2rem;
+}
+
+.reasons__num {
+  flex: 0 0 auto;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: var(--gold, #c4886a);
+  opacity: 0.85;
+}
+
+.reasons__text {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: clamp(0.82rem, 1.15vw, 0.95rem);
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--text, #2e2620);
+  text-wrap: pretty;
+}
+
+.reasons__tail {
+  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--text-light, #8a7468);
+}
+
+@media (max-width: 720px) {
+  .reasons__list {
+    grid-template-columns: 1fr;
+  }
+
+  .reasons__item,
+  .reasons__item:nth-child(odd),
+  .reasons__item:nth-child(even) {
+    padding: 0.9rem 0.5rem;
+    border-right: none;
+  }
+
+  .reasons__item:last-child {
+    border-bottom: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reasons__glow {
+    display: none;
+  }
+}

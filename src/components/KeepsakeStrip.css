@@ -1,0 +1,129 @@
+/* ============================================================
+   KeepsakeStrip — closing beat: everything kept, in one row.
+   Static layout; horizontal scroll-snap only. No JS animation.
+   ============================================================ */
+
+.keepsake-strip {
+  position: relative;
+  z-index: 2;
+  margin: 0 auto 2.5rem;
+  max-width: 56rem;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.keepsake-strip__heading {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 600;
+  color: var(--text, #2E2A27);
+  margin: 0 0 1.25rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.keepsake-strip__empty {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--text-light, #8A7E6E);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Horizontal scroll-snap row */
+.keepsake-strip__row {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 0.25rem 0.25rem 0.75rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.keepsake-card {
+  flex: 0 0 auto;
+  width: 11rem;
+  margin: 0;
+  background: var(--card, #FFFFFF);
+  border: 1px solid var(--gold-light, #E0C99A);
+  border-radius: 12px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  box-shadow: 0 2px 12px rgba(46, 42, 39, 0.06);
+  text-align: left;
+}
+
+/* 4:3 photo thumbnail */
+.keepsake-card__thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--bg, #F6F1E8);
+}
+
+/* Gold-seal text card for wish / candle kinds */
+.keepsake-card__seal {
+  margin: 0;
+  min-height: 8.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text, #2E2A27);
+  background:
+    radial-gradient(circle, rgba(200, 164, 107, 0.14) 0%, transparent 70%),
+    var(--bg, #F6F1E8);
+  border-bottom: 1px solid var(--gold-light, #E0C99A);
+}
+
+.keepsake-card__meta {
+  padding: 0.6rem 0.75rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.keepsake-card__index {
+  font-family: 'Caveat', cursive;
+  font-size: 1rem;
+  line-height: 1.2;
+  color: var(--gold, #C8A46B);
+}
+
+.keepsake-card__label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--text-light, #8A7E6E);
+  line-height: 1.4;
+}
+
+/* ============================================================
+   REDUCED MOTION — strip is static by design; lock it in.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .keepsake-strip__row {
+    scroll-behavior: auto;
+  }
+}
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+@media (max-width: 640px) {
+  .keepsake-strip {
+    padding: 0 0.5rem;
+  }
+
+  .keepsake-card {
+    width: 9.5rem;
+  }
+}

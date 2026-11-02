@@ -1,0 +1,860 @@
+/* ============================================================
+   Playground — Visual Hierarchy Edition
+   Each card has a distinct shape and personality.
+   Scratch Card = square. Photo = landscape film frame.
+   Celebration = circular. All on a scrapbook layout.
+   ============================================================ */
+
+.playground {
+  width: 100%;
+  padding: var(--section-padding-y, 4rem) var(--section-padding-x, 1.5rem);
+  background: var(--bg-playground, #F2EDE2);
+  position: relative;
+  /* Card entrance animations drift x:40 during hidden state; clip prevents
+     horizontal scrollbar on mid-size viewports without affecting the reveal */
+  overflow-x: clip;
+}
+
+/* Subtle parchment warmth */
+.playground::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(200, 164, 107, 0.015) 0%,
+    transparent 30%,
+    rgba(180, 150, 100, 0.02) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.playground__inner {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.playground__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-weight: 700;
+  text-align: center;
+  color: var(--gold, #C8A46B);
+  margin: 0 0 0.25rem;
+  letter-spacing: 0.04em;
+}
+
+.playground__subtitle {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  text-align: center;
+  color: var(--text-light, #8A7E6E);
+  margin: 0 0 2.5rem;
+}
+
+/* ════════════════════════════════════════════════════════════
+   GRID — Asymmetric layout with visual hierarchy
+   Photo (landscape) spans 2 cols as hero. Scratch (square)
+   + Celebration (circle) sit side by side below.
+   ════════════════════════════════════════════════════════════ */
+
+.playground__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Photo developer — hero card, full width, prominent */
+.playground__grid > :nth-child(2) {
+  grid-column: 1 / -1;
+}
+
+/* Scratch card — left column, square */
+.playground__grid > :nth-child(1) {
+  grid-column: 1;
+  justify-self: end;
+}
+
+/* Celebration — right column, centered circle */
+.playground__grid > :nth-child(3) {
+  grid-column: 2;
+  justify-self: start;
+}
+
+/* ════════════════════════════════════════════════════════════
+   BASE CARD — shared scrapbook feel
+   ════════════════════════════════════════════════════════════ */
+
+.playground-card {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+  background: #fcf9f2;
+  box-shadow: var(--shadow-md, 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04)),
+    0 1px 0 rgba(255,255,255,0.7) inset;
+  transition:
+    transform var(--duration-normal, 0.3s) var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1)),
+    box-shadow var(--duration-normal, 0.3s) ease;
+  will-change: transform;
+}
+
+/* Tape accent — unique angle per card */
+.playground-card::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 40px;
+  height: 12px;
+  background: rgba(220, 200, 190, 0.7);
+  border: 1px solid rgba(196, 132, 122, 0.2);
+  border-radius: 1px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.8;
+}
+
+/* Drop shadow under card */
+.playground-card::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 5%;
+  width: 90%;
+  height: 8px;
+  background: rgba(0,0,0,0.04);
+  filter: blur(3px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Card title — handwritten */
+.playground-card__title {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  font-weight: 600;
+  color: var(--text, #2E2A27);
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Button style */
+.playground-card__btn {
+  padding: 0.55rem 1.25rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-dark, #A8884D);
+  background: transparent;
+  border: 1.5px solid var(--gold, #C8A46B);
+  border-radius: var(--radius-full, 9999px);
+  cursor: pointer;
+  transition: background var(--duration-fast, 0.2s) ease, color var(--duration-fast, 0.2s) ease, transform var(--duration-fast, 0.15s) var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
+  position: relative;
+  z-index: 1;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.playground-card__btn:hover {
+  background: var(--gold, #C8A46B);
+  color: #fff;
+}  .playground-card__btn:active {
+  transform: scale(0.94);
+  transition: transform 0.06s var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
+}
+
+.playground-card__btn:focus-visible {
+  outline: 2px solid var(--gold-light, #E0C99A);
+  outline-offset: 3px;
+}
+
+.playground-card__btn--gold {
+  background: var(--gold, #C8A46B);
+  color: #fff;
+  border: none;
+}
+
+.playground-card__btn--gold:hover {
+  background: var(--gold-dark, #A8884D);
+}
+
+/* ════════════════════════════════════════════════════════════
+   SCRATCH CARD — Square, gold, tactile
+   Distinctly square with torn-paper edge effect
+   ════════════════════════════════════════════════════════════ */
+
+.scratch-card {
+  aspect-ratio: 1;
+  width: 280px;
+  max-width: 280px;
+  justify-content: center;
+  clip-path: none;
+  border-radius: var(--radius-md, 8px);
+  margin-top: 4px;
+  background: linear-gradient(135deg, #fcf9f2 0%, #f8f4ea 100%);
+}
+
+.scratch-card::before {
+  transform: translateX(-50%) rotate(-2deg);
+  width: 45px;
+}
+
+.scratch-card::after {
+  left: 8%;
+  width: 84%;
+}
+
+@media (hover: hover) {
+  .scratch-card:hover {
+    transform: translateY(-6px) rotate(-1deg);
+    box-shadow:
+      0 12px 32px rgba(0,0,0,0.12),
+      0 2px 0 rgba(255,255,255,0.8) inset;
+  }
+
+  .scratch-card:active {
+    transform: translateY(-2px) scale(0.97);
+    transition: transform 0.08s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+
+.scratch-card__wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 220 / 140;
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: crosshair;
+  border: 1px solid rgba(200, 164, 107, 0.2);
+}
+
+ .scratch-card__message {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 1rem;
+  text-align: center;
+  background: #fcf9f2;
+  z-index: 0;
+}
+
+.scratch-card__msg-line {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold, #C8A46B);
+  text-align: center;
+}
+
+.scratch-card__msg-sub {
+  font-family: 'Caveat', cursive;
+  font-size: 0.85rem;
+  color: var(--text-light, #8A7E6E);
+  text-align: center;
+}
+
+.scratch-card__canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  touch-action: none;
+}
+
+.scratch-card__reset {
+  font-family: 'Caveat', cursive;
+  font-size: 0.85rem;
+  color: var(--gold, #C8A46B);
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  transition: opacity var(--duration-fast, 0.15s) ease;
+}
+
+.scratch-card__reset:hover {
+  opacity: 0.7;
+}
+
+.scratch-card__reset:active {
+  transform: scale(0.94);
+}
+
+/* Scratch title — straight edge with dashed gold divider (replaces jagged ticket teeth) */
+.scratch-card .playground-card__title {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed rgba(196, 132, 122, 0.4);
+}
+
+/* Scratch actions — one tight centered row with consistent gap */
+.scratch-card__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 1.5rem;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Keepsake confirmation — tiny text glyph, not an emoji */
+.playground-card__kept {
+  font-family: 'Caveat', cursive;
+  font-size: 0.85rem;
+  color: var(--gold-dark, #A8884D);
+  position: relative;
+  z-index: 1;
+}
+
+.photo-developer .playground-card__kept {
+  color: var(--gold-light, #E0C99A);
+  opacity: 0.85;
+}
+
+/* ════════════════════════════════════════════════════════════
+   PHOTO DEVELOPER — Landscape film frame
+   The hero card. Full width, cinematic aspect ratio.
+   Film strip aesthetic with sprocket holes.
+   ════════════════════════════════════════════════════════════ */
+
+.photo-developer {
+  background: #1a1410;
+  border: none;
+  box-shadow:
+    0 6px 24px rgba(0,0,0,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  padding: 1.5rem;
+  position: relative;
+}
+
+/* Film strip edge — top */
+.photo-developer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--gold-dark, #A8884D) 0px,
+    var(--gold-dark, #A8884D) 8px,
+    transparent 8px,
+    transparent 12px
+  );
+  opacity: 0.4;
+}
+
+/* Film strip edge — bottom */
+.photo-developer::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--gold-dark, #A8884D) 0px,
+    var(--gold-dark, #A8884D) 8px,
+    transparent 8px,
+    transparent 12px
+  );
+  opacity: 0.4;
+}
+
+@media (hover: hover) {
+  .photo-developer:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 12px 40px rgba(0,0,0,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+}
+
+.photo-developer .playground-card__title {
+  color: var(--gold-light, #E0C99A);
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.photo-developer .playground-card__btn {
+  border-color: rgba(200, 164, 107, 0.5);
+  color: var(--gold-light, #E0C99A);
+  padding: 0.65rem 1.75rem;
+}
+
+.photo-developer .playground-card__btn:hover {
+  background: var(--gold, #C8A46B);
+  color: #1a1410;
+  transform: scale(1.05);
+}
+
+.photo-developer .playground-card__btn:active {
+  transform: scale(0.95);
+}
+
+/* Film frame — landscape 16:9 ratio */
+.photo-developer__card {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg, 0 4px 16px rgba(0,0,0,0.08), 0 16px 48px rgba(0,0,0,0.05)),
+    inset 0 0 0 1px rgba(200, 164, 107, 0.15);
+  transition: transform var(--duration-normal, 0.3s) var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
+}
+
+/* Button reset — element was a div; keep appearance identical as a <button> */
+button.photo-developer__card {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  appearance: none;
+}
+
+.photo-developer__card:focus-visible {
+  outline: 2px solid var(--gold-light, #E0C99A);
+  outline-offset: 2px;
+}
+
+.photo-developer__card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 3px solid rgba(200, 164, 107, 0.1);
+  pointer-events: none;
+  z-index: 2;
+}
+
+@media (hover: hover) {
+  .photo-developer__card:hover {
+    transform: scale(1.02);
+    box-shadow:
+      0 8px 32px rgba(0,0,0,0.3),
+      inset 0 0 0 1px rgba(200, 164, 107, 0.2);
+  }
+}
+
+.photo-developer__developing,
+.photo-developer__result {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.photo-developer__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.photo-developer__grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.3;
+  transition: opacity 2s ease;
+  pointer-events: none;
+}
+
+.photo-developer__frame-label {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.55rem;
+  color: var(--gold-light, #E0C99A);
+  background: rgba(0,0,0,0.5);
+  padding: 2px 6px;
+  border-radius: 1px;
+  letter-spacing: 0.05em;
+}
+
+.photo-developer__stamp {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--gold-light, #E0C99A);
+  opacity: 0.6;
+}
+
+.photo-developer__hint {
+  font-family: 'Caveat', cursive;
+  font-size: 0.8rem;
+  color: var(--gold-light, #E0C99A);
+  margin: 0.25rem 0 0;
+  opacity: 0.6;
+  position: relative;
+  z-index: 1;
+}
+
+/* ════════════════════════════════════════════════════════════
+   CONFETTI / CELEBRATION — Circular card
+   Distinctly round with radial gradient and pulse animation
+   ════════════════════════════════════════════════════════════ */
+
+.confetti-button-card {
+  aspect-ratio: 1;
+  width: 240px;
+  max-width: 240px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  clip-path: none;
+  background: radial-gradient(circle at 30% 30%, #fffcf5 0%, #f8f4ea 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Inner ring decoration */
+.confetti-button-card::before {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  border: 1px dashed rgba(200, 164, 107, 0.35);
+  background: radial-gradient(circle at 50% 50%, rgba(200, 164, 107, 0.06) 0%, transparent 72%);
+  pointer-events: none;
+}
+
+/* Subtle radial glow */
+.confetti-button-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(200, 164, 107, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .confetti-button-card:hover {
+    transform: translateY(-6px) scale(1.04);
+    box-shadow:
+      0 12px 36px rgba(200, 164, 107, 0.2),
+      0 0 0 3px rgba(200, 164, 107, 0.15);
+  }
+
+  .confetti-button-card:active {
+    transform: translateY(-2px) scale(0.96);
+    transition: transform 0.08s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}  .confetti-button-card .playground-card__btn {
+  border-radius: var(--radius-full, 9999px);
+  padding: 0.75rem 2rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  background: var(--gold, #C8A46B);
+  color: #fff;
+  border: none;
+  position: relative;
+  z-index: 1;
+}
+
+.confetti-button-card .playground-card__btn:focus-visible {
+  outline: 2px solid var(--gold-light, #E0C99A);
+  outline-offset: 3px;
+}
+
+.confetti-button-card .playground-card__btn:hover {
+  background: var(--gold-dark, #A8884D);
+  transform: scale(1.08);
+}
+
+.confetti-button-card .playground-card__btn:active {
+  transform: scale(0.92);
+}
+
+/* Confetti stack — single centered column at the circle optical center */
+.confetti-button-card__stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  max-width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+
+.confetti-button-card .playground-card__title {
+  width: 100%;
+  text-align: center;
+  margin: 0;
+}
+
+.confetti-button-card .playground-card__btn {
+  white-space: nowrap;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* ════════════════════════════════════════════════════════════
+   MOBILE — Stacked, full-width cards
+   ════════════════════════════════════════════════════════════ */
+
+@media (max-width: 640px) {
+  .playground__grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
+  .playground__grid > :nth-child(1),
+  .playground__grid > :nth-child(2),
+  .playground__grid > :nth-child(3) {
+    grid-column: 1;
+    justify-self: center;
+  }
+
+  /* Scratch card: centered square on mobile */
+  .scratch-card {
+    width: 100%;
+    max-width: 300px;
+    aspect-ratio: 1;
+  }
+
+  .scratch-card__wrapper {
+    max-width: 260px;
+  }
+
+  /* Photo: full width landscape */
+  .photo-developer {
+    padding: 1rem;
+  }
+
+  .photo-developer__card {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Celebration: pill shape on mobile, easier to tap */
+  .confetti-button-card {
+    border-radius: 16px;
+    aspect-ratio: auto;
+    width: 100%;
+    max-width: 300px;
+    padding: 1.75rem 1.5rem;
+  }
+
+  .confetti-button-card::before {
+    display: block;
+    inset: 8px;
+    border-radius: 12px;
+  }
+
+  /* Remove tape on mobile */
+  .playground-card::before {
+    display: none;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   TEDDY BEAR — Bear Hug card
+   ════════════════════════════════════════════════════════════ */
+
+.teddy-card .playground-card__title {
+  letter-spacing: 0.04em;
+}
+
+/* Speech bubble */
+.teddy__bubble-zone {
+  min-height: 3.4em;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.teddy__bubble {
+  position: relative;
+  background: #FFFDF7;
+  border: 1px solid rgba(196, 132, 122, 0.35);
+  border-radius: 14px;
+  padding: 0.45rem 1rem 0.5rem;
+  box-shadow: 0 2px 8px rgba(46, 38, 32, 0.08);
+  text-align: center;
+  will-change: transform, opacity;
+}
+
+.teddy__bubble::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 10px;
+  height: 10px;
+  background: #FFFDF7;
+  border-right: 1px solid rgba(196, 136, 106, 0.4);
+  border-bottom: 1px solid rgba(196, 136, 106, 0.4);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.teddy__bubble-hint {
+  font-family: 'Caveat', cursive;
+  font-size: 1.05rem;
+  color: var(--text-light, #8A7468);
+}
+
+.teddy__bubble-eyebrow {
+  display: block;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-dark, #A8673E);
+}
+
+.teddy__bubble-word {
+  display: block;
+  font-family: 'Caveat', cursive;
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text, #2E2620);
+}
+
+/* The bear button */
+.teddy {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.teddy:focus-visible {
+  outline: 2px solid var(--gold-light, #EDCFB3);
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+
+.teddy__art {
+  position: relative;
+  width: min(148px, 88%);
+  margin: 0 auto;
+}
+
+.teddy__svg-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 6px 14px rgba(74, 62, 56, 0.14));
+}
+
+/* Articulated parts — pivots live in view-box space */
+.teddy__arm,
+.teddy__head {
+  transform-box: view-box;
+  transition: transform 0.55s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.teddy__arm--l {
+  transform-origin: 215px 520px;
+}
+
+.teddy__arm--r {
+  transform-origin: 545px 520px;
+}
+
+.teddy__head {
+  transform-origin: 380px 520px;
+}
+
+.teddy--hugging .teddy__arm--l {
+  transform: rotate(-24deg);
+}
+
+.teddy--hugging .teddy__arm--r {
+  transform: rotate(24deg);
+}
+
+.teddy--hugging .teddy__head {
+  transform: rotate(2.5deg);
+}
+
+/* Blush overlays that fade in while hugging */
+.teddy__blush {
+  position: absolute;
+  top: 39%;
+  width: 44px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(232,162,176,0.85) 0%, rgba(232,162,176,0) 70%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.teddy__blush--l {
+  left: 22%;
+}
+
+.teddy__blush--r {
+  right: 22%;
+}
+
+.teddy--hugging .teddy__blush {
+  opacity: 0.9;
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .playground-card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .photo-developer__card {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .confetti-button-card:hover {
+    transform: none !important;
+  }
+
+  .teddy__bubble {
+    animation: none !important;
+  }
+
+}

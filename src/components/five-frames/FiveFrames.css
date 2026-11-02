@@ -1,0 +1,1001 @@
+/* ============================================================
+   Five Frames — Editorial Magazine Gallery
+   Premium spacing, elegant captions, refined hover states.
+   ============================================================ */
+
+.five-frames {
+  position: relative;
+  width: 100%;
+  background: var(--bg-gallery, #F5F0E6);
+  padding: 0 0 var(--section-padding-y, 4rem);
+}
+
+/* Subtle paper fiber texture */
+.five-frames::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 20% 30%, rgba(200, 164, 107, 0.02) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(200, 164, 107, 0.015) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SECTION HEADER — Editorial masthead style
+   ════════════════════════════════════════════════════════════ */
+
+.five-frames__header {
+  text-align: center;
+  padding: 5rem var(--section-padding-x, 1.5rem) 3.5rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.five-frames__eyebrow {
+  display: block;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold, #C8A46B);
+  margin-bottom: 0.75rem;
+  opacity: 0.7;
+}
+
+.five-frames__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: var(--text, #2E2A27);
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  line-height: 1.1;
+}
+
+/* Decorative divider */
+.five-frames__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.five-frames__divider-line {
+  width: 2rem;
+  height: 1px;
+  background: var(--gold, #C8A46B);
+  opacity: 0.35;
+}
+
+.five-frames__divider-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold, #C8A46B);
+  opacity: 0.5;
+}
+
+.five-frames__subtitle {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-style: italic;
+  color: var(--text-light, #8A7E6E);
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SECTION FOOTER
+   ════════════════════════════════════════════════════════════ */
+
+.five-frames__footer {
+  text-align: center;
+  padding: var(--section-padding-y, 4rem) var(--section-padding-x, 1.5rem);
+}
+
+.five-frames__footer-line {
+  width: 2rem;
+  height: 1px;
+  background: var(--gold, #C8A46B);
+  margin: 0 auto 1rem;
+  opacity: 0.3;
+}
+
+.five-frames__footer-text {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--text-light, #8A7E6E);
+  opacity: 0.5;
+  margin: 0;
+}
+
+/* ════════════════════════════════════════════════════════════
+   FRAME WRAPPER (shared)
+   ════════════════════════════════════════════════════════════ */
+
+.five-frame {
+  position: relative;
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Button reset — photo tiles were divs; keep appearance identical as <button>s */
+button.five-frame__cinematic-frame,
+button.five-frame__spread,
+button.five-frame__develop-container,
+button.five-frame__film-container,
+button.five-frame__scope-container {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  appearance: none;
+}
+
+/* Mobile card keeps its modifier background/margins; only strip UA button chrome */
+button.five-frame-mobile {
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  appearance: none;
+}
+
+button.five-frame-mobile.five-frame-mobile--film {
+  padding: 1.25rem;
+}
+
+.five-frame__sticky {
+  position: sticky;
+  top: 5vh;
+  width: 100%;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ════════════════════════════════════════════════════════════
+   EDITORIAL CAPTION — Magazine-style frame info
+   ════════════════════════════════════════════════════════════ */
+
+.five-frame__caption-wrap {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.five-frame__caption-wrap--light .five-frame__caption-num,
+.five-frame__caption-wrap--light .five-frame__caption-title,
+.five-frame__caption-wrap--light .five-frame__caption-subtitle {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.five-frame__caption-wrap--light .five-frame__caption-divider {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.five-frame__caption {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  white-space: nowrap;
+}
+
+.five-frame__caption-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(0.75rem, 1vw, 0.9rem);
+  font-weight: 700;
+  color: var(--gold, #C8A46B);
+  letter-spacing: 0.02em;
+}
+
+.five-frame__caption-divider {
+  width: 1.5rem;
+  height: 1px;
+  background: var(--gold, #C8A46B);
+  opacity: 0.4;
+}
+
+.five-frame__caption-title {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: clamp(0.6rem, 0.8vw, 0.7rem);
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text, #2E2A27);
+}
+
+.five-frame__caption-subtitle {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+  color: var(--text-light, #8A7E6E);
+  font-style: italic;
+  opacity: 0.7;
+}
+
+/* ════════════════════════════════════════════════════════════
+   FRAME 01 — FULL-BLEED CINEMATIC
+   ════════════════════════════════════════════════════════════ */
+
+.five-frame--cinematic {
+  background: #000;
+}
+
+.five-frame--cinematic .five-frame__sticky {
+  justify-content: center;
+}
+
+/* Letterbox bars */
+.five-frame__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: #000;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.five-frame__bar--top {
+  top: 0;
+}
+
+.five-frame__bar--bottom {
+  bottom: 0;
+}
+
+/* Cinematic frame */
+.five-frame__cinematic-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.five-frame__img--cinematic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+/* Vignette for cinematic depth */
+.five-frame__cinematic-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 50%,
+    rgba(0, 0, 0, 0.3) 75%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Thin white border */
+.five-frame__cinematic-border {
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+  z-index: 3;
+  border-radius: 1px;
+}
+
+/* ════════════════════════════════════════════════════════════
+   FRAME 02 — EDITORIAL BOOK SPREAD
+   ════════════════════════════════════════════════════════════ */
+
+.five-frame--editorial {
+  background: var(--bg, #F6F1E8);
+}
+
+.five-frame--editorial .five-frame__sticky {
+  justify-content: center;
+}
+
+.five-frame__spread {
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  height: 65vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.five-frame__spread-page {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  will-change: transform;
+  transition: transform var(--duration-slow, 0.4s) var(--ease-out-expo, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.five-frame__spread-page--left {
+  left: 0;
+  border-right: 1px solid rgba(200, 164, 107, 0.15);
+}
+
+.five-frame__spread-page--right {
+  right: 0;
+  border-left: 1px solid rgba(200, 164, 107, 0.15);
+}
+
+.five-frame__spread-img-wrap {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ─── Editorial single print (frame 02 — no split) ── */
+
+.five-frame__editorial-photo {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(200, 164, 107, 0.35);
+}
+
+.five-frame__editorial-photo picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.five-frame__editorial-photo .five-frame__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Page shadow in the gutter */
+.five-frame__spread-shadow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.06) 0%,
+    transparent 30%,
+    transparent 70%,
+    rgba(0, 0, 0, 0.06) 100%
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Cover overlay — like a book jacket */
+.five-frame__spread-cover {
+  position: absolute;
+  inset: 0;
+  background: var(--bg, #F6F1E8);
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* ════════════════════════════════════════════════════════════
+   FRAME 03 — DARKROOM DEVELOP
+   ════════════════════════════════════════════════════════════ */
+
+.five-frame--develop {
+  background: #1a1410;
+}
+
+.five-frame--develop .five-frame__sticky {
+  justify-content: center;
+}
+
+.five-frame__develop-container {
+  position: relative;
+  width: 80%;
+  max-width: 700px;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow:
+    0 4px 30px rgba(0, 0, 0, 0.4),
+    inset 0 0 40px rgba(100, 60, 30, 0.1);
+  transition: box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.five-frame__develop-image {
+  position: absolute;
+  inset: 0;
+  will-change: filter;
+}
+
+.five-frame__develop-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Chemical developing overlay */
+.five-frame__develop-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 60%,
+    rgba(210, 140, 60, 0.25) 0%,
+    rgba(180, 100, 40, 0.4) 40%,
+    rgba(140, 70, 30, 0.3) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Grain overlay */
+.five-frame__develop-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  mix-blend-mode: overlay;
+}
+
+/* Tray border — subtle frame */
+.five-frame__develop-border {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(200, 164, 107, 0.08);
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* ════════════════════════════════════════════════════════════
+   FRAME 04 — FILM STRIP / LIGHT LEAK
+   ════════════════════════════════════════════════════════════ */
+
+.five-frame--film {
+  background: #0d0d0d;
+}
+
+.five-frame--film .five-frame__sticky {
+  justify-content: center;
+}
+
+.five-frame__film-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  will-change: transform;
+  cursor: pointer;
+}
+
+/* Background light table glow */
+.five-frame__film-glow {
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(200, 164, 107, 0.04) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Sprocket holes */
+.five-frame__sprockets {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px 14px;
+}
+
+.five-frame__sprockets--left {
+  padding-right: 10px;
+}
+
+.five-frame__sprockets--right {
+  padding-left: 10px;
+}
+
+.five-frame__sprocket {
+  width: 10px;
+  height: 8px;
+  border: 1px solid rgba(200, 164, 107, 0.15);
+  border-radius: 1px;
+  background: rgba(200, 164, 107, 0.03);
+}
+
+/* Photo area */
+.five-frame__film-photo {
+  position: relative;
+  width: 65vw;
+  max-width: 750px;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  transition: box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.five-frame__film-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Light leak traveling across */
+.five-frame__film-leak {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 180, 80, 0.08) 20%,
+    rgba(255, 150, 50, 0.12) 35%,
+    transparent 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+  animation: filmLeakMove 4s ease-in-out infinite alternate;
+}
+
+@keyframes filmLeakMove {
+  0%   { background-position: -100% 0; opacity: 0.3; }
+  50%  { opacity: 1; }
+  100% { background-position: 200% 0; opacity: 0.3; }
+}
+
+/* Film frame border */
+.five-frame__film-border {
+  position: absolute;
+  inset: -4px;
+  border: 2px solid rgba(200, 164, 107, 0.08);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* ════════════════════════════════════════════════════════════
+   FRAME 05 — CINEMASCOPE REVEAL
+   ════════════════════════════════════════════════════════════ */
+
+.five-frame--scope {
+  background: #000;
+}
+
+.five-frame--scope .five-frame__sticky {
+  justify-content: center;
+}
+
+/* Cinemascope letterbox bars */
+.five-frame__scope-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: #000;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.five-frame__scope-bar--top {
+  top: 0;
+}
+
+.five-frame__scope-bar--bottom {
+  bottom: 0;
+}
+
+.five-frame__scope-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform var(--duration-slow, 0.4s) var(--ease-out-expo, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.five-frame__scope-image {
+  position: absolute;
+  inset: 0;
+  will-change: clip-path, filter;
+}
+
+.five-frame__scope-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Scanline overlay */
+.five-frame__scope-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ════════════════════════════════════════════════════════════
+   HOVER EFFECTS (desktop only) — Premium, magazine feel
+   ════════════════════════════════════════════════════════════ */
+
+@media (hover: hover) {
+  /* Cinematic: subtle zoom + border glow */
+  .five-frame__cinematic-frame {
+    transition: transform var(--duration-slow, 0.4s) var(--ease-out-expo, cubic-bezier(0.22, 1, 0.36, 1));
+  }
+
+  .five-frame__cinematic-frame:hover {
+    transform: scale(1.005);
+  }
+
+  .five-frame__cinematic-frame:hover .five-frame__cinematic-border {
+    border-color: rgba(255, 255, 255, 0.25);
+    transition: border-color 0.3s ease;
+  }
+
+  /* Editorial: subtle lift + shadow */
+  .five-frame__spread {
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.4s ease;
+  }
+
+  .five-frame__spread:hover {
+    transform: scale(1.01);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Develop: tray glow intensifies */
+  .five-frame__develop-container:hover {
+    box-shadow:
+      0 6px 40px rgba(0, 0, 0, 0.5),
+      inset 0 0 60px rgba(100, 60, 30, 0.15);
+    transform: scale(1.012);
+  }
+
+  /* Film: light table glow intensifies */
+  .five-frame__film-photo:hover {
+    box-shadow: 0 0 60px rgba(200, 164, 107, 0.12);
+    transform: scale(1.01);
+  }
+
+  /* Scope: subtle scale */
+  .five-frame__scope-container:hover {
+    transform: scale(1.008);
+  }
+
+  /* Caption: fade up on section hover */
+  .five-frame__caption-wrap {
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .five-frame:hover .five-frame__caption {
+    transform: translateY(-2px);
+  }
+
+  .five-frame:hover .five-frame__caption-divider {
+    width: 2rem;
+    transition: width 0.3s ease;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   MOBILE LAYOUT (≤ 768px) — Magazine-style stacked cards
+   ════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .five-frames {
+    padding: 0 0 var(--section-padding-y-mobile, 3rem);
+  }
+
+  .five-frames__header {
+    padding: 4rem 1.25rem 2.5rem;
+  }
+
+  .five-frame {
+    height: auto;
+    min-height: 0;
+    padding: 0 1rem 2rem;
+  }
+
+  .five-frame__sticky {
+    position: relative;
+    top: 0;
+    height: auto;
+    min-height: auto;
+  }
+
+  /* ── Mobile card base ── */
+  .five-frame-mobile {
+    position: relative;
+    width: 100%;
+    margin-bottom: 2.5rem;
+    border-radius: 0;
+    overflow: hidden;
+  }
+
+  .five-frame-mobile__img-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .five-frame-mobile--cinematic {
+    background: #000;
+    padding: 0;
+  }
+
+  .five-frame-mobile--editorial {
+    background: var(--bg, #F6F1E8);
+  }
+
+  .five-frame-mobile--develop {
+    background: var(--bg, #F6F1E8);
+    padding: 0;
+  }
+
+  .five-frame-mobile--develop .five-frame-mobile__img-container {
+    aspect-ratio: 4 / 3;
+  }
+
+  .five-frame-mobile--develop .five-frame__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .five-frame-mobile--film {
+    background: #0d0d0d;
+    padding: 1.25rem;
+  }
+
+  .five-frame-mobile--widescreen,
+  .five-frame-mobile--scope {
+    background: #000;
+    padding: 0;
+  }
+
+  /* ── Caption: mobile ── */
+  .five-frame__caption--mobile {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem 0.55rem;
+    padding: 0.9rem 1rem 1.15rem;
+    background: transparent;
+    white-space: normal;
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .five-frame__caption--mobile .five-frame__caption-num {
+    font-size: 0.72rem;
+  }
+
+  .five-frame__caption--mobile .five-frame__caption-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+  }
+
+  .five-frame__caption--mobile .five-frame__caption-subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+  }
+
+  /* Dark film / letterbox cards need light captions — the default ink
+     vanished into the black card background. */
+  .five-frame__caption--mobile.five-frame__caption--light .five-frame__caption-num {
+    color: var(--gold-light, #E0C99A);
+  }
+
+  .five-frame__caption--mobile.five-frame__caption--light .five-frame__caption-title {
+    color: rgba(255, 253, 247, 0.94);
+  }
+
+  .five-frame__caption--mobile.five-frame__caption--light .five-frame__caption-subtitle {
+    color: rgba(255, 253, 247, 0.68);
+    opacity: 1;
+  }
+
+  .five-frame__caption--mobile.five-frame__caption--light .five-frame__caption-divider {
+    background: rgba(224, 201, 154, 0.55);
+    opacity: 1;
+  }
+
+  /* ── Film mobile ── */
+  .five-frame-mobile__film {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+
+  .five-frame-mobile__sprockets {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .five-frame-mobile__sprocket {
+    width: 6px;
+    height: 5px;
+    border: 1px solid rgba(200, 164, 107, 0.12);
+    border-radius: 1px;
+  }
+
+  .five-frame-mobile__film-photo {
+    flex: 1;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+  }
+
+  .five-frame-mobile__film-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ── Scope mobile ── */
+  .five-frame-mobile__scope {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .five-frame-mobile__scope img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .five-frame-mobile__scope-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 12%;
+    background: #000;
+    pointer-events: none;
+  }
+
+  .five-frame-mobile__scope-bar--top {
+    top: 0;
+  }
+
+  .five-frame-mobile__scope-bar--bottom {
+    bottom: 0;
+  }
+
+  /* ── Legacy mobile classes (kept for compatibility) ── */
+  .five-frame-mobile--cinematic .five-frame-mobile__img-wrap {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+
+  .five-frame-mobile--cinematic .five-frame-mobile__img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .five-frame__label {
+    position: relative;
+    display: block;
+    text-align: center;
+    bottom: auto;
+    margin-top: 0.5rem;
+    opacity: 0.4;
+    font-size: 0.6rem;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .five-frame {
+    height: auto;
+    min-height: 50vh;
+    padding: 2rem 1rem;
+  }
+
+  .five-frame__sticky {
+    position: relative;
+    top: 0;
+    height: auto;
+    min-height: auto;
+  }
+
+  .five-frame__bar,
+  .five-frame__scope-bar {
+    display: none;
+  }
+
+  .five-frame__spread-cover {
+    display: none;
+  }
+
+  .five-frame__spread-page {
+    position: relative;
+    width: 50%;
+  }
+
+  .five-frame__film-glow,
+  .five-frame__film-leak {
+    display: none;
+  }
+
+  .five-frame__img--cinematic {
+    animation: none;
+  }
+
+  .five-frame__cinematic-vignette {
+    opacity: 0.5;
+  }
+
+  .five-frame__img-wrap img {
+    opacity: 1;
+    transition: none;
+  }
+
+  .five-frame__img-placeholder {
+    display: none;
+  }
+
+  .five-frame__develop-container {
+    transition: none;
+  }
+
+  .five-frame__film-photo {
+    transition: none;
+  }
+
+  .five-frame__scope-container {
+    transition: none;
+  }
+
+  .five-frame__spread {
+    transition: none;
+  }
+}

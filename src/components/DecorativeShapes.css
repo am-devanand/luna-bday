@@ -1,0 +1,29 @@
+/* === Decorative Shapes Container === */
+.decorative-shapes {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Individual shapes */
+.deco-shape {
+  will-change: transform, opacity;
+  opacity: 0;
+  animation: shapeFadeIn 0.8s var(--ease-out-expo, cubic-bezier(0.22, 1, 0.36, 1)) forwards;
+}
+
+/* Fade-in animation */
+@keyframes shapeFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .deco-shape {
+    animation: none !important;
+    opacity: 0.3 !important;
+  }
+}

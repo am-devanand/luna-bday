@@ -1,0 +1,161 @@
+/* ============================================================
+   PhotoLightbox — Fullscreen photo viewer
+   ============================================================ */
+
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Close button ───────────────────────────────────── */
+.lightbox__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--gold, #C8A46B);
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  transition: background 0.2s ease, transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lightbox__close:hover {
+  background: rgba(200, 164, 107, 0.15);
+}
+
+.lightbox__close:active {
+  transform: scale(0.9);
+  transition: transform 0.06s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ─── Nav arrows ─────────────────────────────────────── */
+.lightbox__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(200, 164, 107, 0.1);
+  border: 1px solid rgba(200, 164, 107, 0.3);
+  border-radius: 50%;
+  color: var(--gold, #C8A46B);
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lightbox__nav:hover {
+  background: rgba(200, 164, 107, 0.25);
+  border-color: var(--gold, #C8A46B);
+}
+
+.lightbox__nav:active {
+  transform: translateY(-50%) scale(0.9);
+  transition: transform 0.06s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lightbox__nav--prev {
+  left: 1rem;
+}
+
+.lightbox__nav--next {
+  right: 1rem;
+}
+
+/* ─── Image area ─────────────────────────────────────── */
+.lightbox__image-area {
+  position: relative;
+  width: 90vw;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.lightbox__image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 2px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* ─── Counter ────────────────────────────────────────── */
+.lightbox__counter {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.05em;
+}
+
+/* ─── Focus visible ──────────────────────────────────── */
+.lightbox__close:focus-visible,
+.lightbox__nav:focus-visible {
+  outline: 2px solid var(--gold-light, #E0C99A);
+  outline-offset: 2px;
+}
+
+/* ─── Reduce motion ─────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .lightbox__image {
+    transition: none !important;
+  }
+}
+
+
+/* ─── Keep button (gold outline pill, 44px target) ─── */
+.lightbox__keep {
+  position: absolute;
+  bottom: 3.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  min-height: 44px;
+  padding: 0.625rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--gold, #C8A46B);
+  border-radius: 999px;
+  color: var(--gold, #C8A46B);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.2s ease, transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lightbox__keep:hover {
+  background: rgba(200, 164, 107, 0.15);
+}
+
+.lightbox__keep:active {
+  transform: translateX(-50%) scale(0.97);
+}
+
+.lightbox__keep:focus-visible {
+  outline: 2px solid var(--gold-light, #E0C99A);
+  outline-offset: 2px;
+}

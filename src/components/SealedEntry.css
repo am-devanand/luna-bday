@@ -1,0 +1,500 @@
+/* ============================================================
+   SealedEntry — "Starry Night to Sunrise" Theatrical Entry
+   A black starry sky that melts into a warm golden sunrise.
+   The wax seal becomes the sun itself, rising on click.
+   ============================================================ */
+
+/* ── Outer shell — fixed fullscreen ── */
+.sealed-entry {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100dvh;
+  padding: 1.5rem 1rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #080612; /* warm midnight */
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  clip-path: inset(0 0 0 0);
+  transition:
+    opacity 0.8s var(--ease-out-expo, cubic-bezier(0.22,1,0.36,1)),
+    transform 0.8s var(--ease-out-expo, cubic-bezier(0.22,1,0.36,1)),
+    clip-path 0.7s var(--ease-out-expo, cubic-bezier(0.22,1,0.36,1));
+}
+
+/* ── Leave transition ── */
+.sealed-entry--leaving {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.99);
+  pointer-events: none;
+}
+
+.sealed-entry--veil.sealed-entry--leaving {
+  clip-path: inset(100% 0 0 0);
+}
+
+/* ── Sky layers (behind everything) ── */
+.sealed-entry__sky {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 120% 60% at 50% 100%, rgba(196,136,106,0) 0%, rgba(196,136,106,0) 100%),
+    linear-gradient(180deg, #080612 0%, #100D20 40%, #1A1228 100%);
+  transition: background 1.2s ease;
+  pointer-events: none;
+}
+
+/* When the seal breaks, sky warms into sunrise */
+.sealed-entry--breaking .sealed-entry__sky,
+.sealed-entry--leaving .sealed-entry__sky {
+  background:
+    radial-gradient(ellipse 140% 70% at 50% 110%, rgba(196,136,106,0.95) 0%, rgba(212,100,60,0.6) 30%, rgba(140,60,80,0.3) 55%, transparent 72%),
+    radial-gradient(ellipse 100% 40% at 50% 100%, rgba(255,200,140,0.4) 0%, transparent 60%),
+    linear-gradient(180deg, #130E22 0%, #1E1430 35%, #3D1F1A 70%, #6B2E18 100%);
+}
+
+/* ── Horizon glow (hidden until sunrise) ── */
+.sealed-entry__horizon {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  background: radial-gradient(ellipse 130% 100% at 50% 100%,
+    rgba(196,136,106,0) 0%,
+    rgba(196,136,106,0) 100%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.4s ease, background 1.4s ease;
+}
+
+.sealed-entry--breaking .sealed-entry__horizon,
+.sealed-entry--leaving .sealed-entry__horizon {
+  opacity: 1;
+  background: radial-gradient(ellipse 130% 100% at 50% 100%,
+    rgba(255,210,160,0.55) 0%,
+    rgba(196,136,106,0.35) 30%,
+    rgba(130,60,40,0.15) 55%,
+    transparent 75%);
+}
+
+/* ── Star field ── */
+.sealed-entry__stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 1.8s ease;
+}
+
+.sealed-entry--breaking .sealed-entry__stars,
+.sealed-entry--leaving .sealed-entry__stars {
+  opacity: 0;
+}
+
+.sealed-entry__star {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  animation: starTwinkle var(--star-dur, 3s) ease-in-out infinite;
+  animation-delay: var(--star-delay, 0s);
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: var(--star-min-op, 0.3); transform: scale(0.8); }
+  50%       { opacity: var(--star-max-op, 1);   transform: scale(1.2); }
+}
+
+/* ── Shooting star ── */
+.sealed-entry__shooting-star {
+  position: absolute;
+  top: 18%;
+  left: -10%;
+  width: 120px;
+  height: 1.5px;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.9) 60%, rgba(196,136,106,0.6) 100%);
+  border-radius: 99px;
+  opacity: 0;
+  transform: rotate(-25deg);
+  animation: shootingStar 5s ease-out 1.8s infinite;
+  pointer-events: none;
+}
+
+@keyframes shootingStar {
+  0%   { opacity: 0; transform: translateX(0) translateY(0) rotate(-25deg); }
+  5%   { opacity: 1; }
+  30%  { opacity: 0; transform: translateX(380px) translateY(100px) rotate(-25deg); }
+  100% { opacity: 0; transform: translateX(380px) translateY(100px) rotate(-25deg); }
+}
+
+/* ── Moon (fades as sun rises) ── */
+.sealed-entry__moon {
+  position: absolute;
+  top: 12%;
+  right: 15%;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #FFF8E8 0%, #EDD9B0 60%, #D4B880 100%);
+  box-shadow:
+    0 0 20px 6px rgba(237,207,160,0.25),
+    0 0 50px 15px rgba(237,207,160,0.08);
+  opacity: 0.85;
+  pointer-events: none;
+  transition: opacity 1.6s ease, transform 1.6s ease;
+  animation: moonFloat 8s ease-in-out infinite;
+}
+
+@keyframes moonFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+.sealed-entry--breaking .sealed-entry__moon,
+.sealed-entry--leaving .sealed-entry__moon {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+/* ── Card (centered content) ── */
+.sealed-entry__card {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  max-width: 420px;
+  box-sizing: border-box;
+  padding: 2rem 1.5rem;
+}
+
+/* ── Eyebrow ── */
+.sealed-entry__eyebrow {
+  margin: 0 0 0.6rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(237,207,179,0.55);
+}
+
+/* ── Headline ── */
+.sealed-entry__headline {
+  margin: 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.2rem, 9vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  color: #FFF8EE;
+  text-wrap: balance;
+  text-shadow: 0 0 40px rgba(196,136,106,0.4), 0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* ── Body ── */
+.sealed-entry__body {
+  margin: 0.85rem 0 0;
+  max-width: 34ch;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: rgba(237,207,179,0.7);
+}
+
+/* ── Seal wrap ── */
+.sealed-entry__seal-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  padding: 1.5rem;
+}
+
+/* ── The Seal (wax disc = the sun) ── */
+.sealed-entry__seal {
+  position: relative;
+  z-index: 2;
+  width: 92px;
+  height: 92px;
+  border: none;
+  border-radius: 50%;
+  appearance: none;
+  cursor: pointer;
+  background:
+    radial-gradient(circle at 35% 28%, rgba(255,255,255,0.45) 0%, transparent 45%),
+    radial-gradient(circle at 40% 35%, #EDCFB3 0%, #C4886A 50%, #A8673E 100%);
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.5),
+    0 8px 32px rgba(196,136,106,0.35),
+    0 0 60px rgba(196,136,106,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.55),
+    inset 0 -2px 0 rgba(0,0,0,0.2);
+  transition:
+    transform 0.25s var(--ease-spring, cubic-bezier(0.34,1.56,0.64,1)),
+    box-shadow 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+  /* Pulse to invite interaction */
+  animation: sealPulse 3s ease-in-out infinite;
+}
+
+@keyframes sealPulse {
+  0%, 100% { box-shadow: 0 2px 8px rgba(0,0,0,0.5), 0 8px 32px rgba(196,136,106,0.35), 0 0 60px rgba(196,136,106,0.15), inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -2px 0 rgba(0,0,0,0.2); }
+  50%       { box-shadow: 0 2px 8px rgba(0,0,0,0.5), 0 12px 40px rgba(196,136,106,0.55), 0 0 90px rgba(196,136,106,0.28), inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -2px 0 rgba(0,0,0,0.2); }
+}
+
+.sealed-entry__seal:hover {
+  transform: scale(1.08) rotate(-4deg);
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.5),
+    0 16px 48px rgba(196,136,106,0.5),
+    0 0 80px rgba(196,136,106,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.55);
+  animation-play-state: paused;
+}
+
+.sealed-entry__seal:active {
+  transform: scale(0.92) rotate(3deg);
+  transition-duration: 0.08s;
+}
+
+.sealed-entry__seal:focus-visible {
+  outline: 3px solid #EDCFB3;
+  outline-offset: 5px;
+}
+
+/* ── Seal emblem ── */
+.sealed-entry__seal-emblem {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #2E2620;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+}
+
+/* ── Seal break animation ── */
+.sealed-entry__seal--breaking {
+  animation: entrySealBreak 0.7s var(--ease-out-expo, cubic-bezier(0.22,1,0.36,1)) forwards;
+  pointer-events: none;
+}
+
+@keyframes entrySealBreak {
+  0%   { transform: scale(1) rotate(0deg); opacity: 1; }
+  15%  { transform: scale(1.18) rotate(-10deg); opacity: 1; }
+  40%  { transform: scale(0.88) rotate(14deg); opacity: 0.8; }
+  65%  { transform: scale(0.5) rotate(-6deg) translateY(-12px); opacity: 0.4; }
+  100% { transform: scale(0.1) rotate(20deg) translateY(-28px); opacity: 0; }
+}
+
+/* ── Ring ripple ── */
+.sealed-entry__ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: 92px;
+  height: 92px;
+  border: 2px solid rgba(196,136,106,0.7);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.6);
+  pointer-events: none;
+}
+
+.sealed-entry__ring--active {
+  animation: entrySealRing 0.8s var(--ease-out-expo, cubic-bezier(0.22,1,0.36,1)) forwards;
+}
+
+@keyframes entrySealRing {
+  0%   { opacity: 0.8; transform: translate(-50%,-50%) scale(0.6); }
+  100% { opacity: 0;   transform: translate(-50%,-50%) scale(2.2); }
+}
+
+/* ── Sun rays (appear on seal-break) ── */
+.sealed-entry__rays {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 92px;
+  height: 92px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.sealed-entry__rays--active {
+  animation: raysAppear 1.2s ease-out 0.1s forwards;
+}
+
+@keyframes raysAppear {
+  0%   { opacity: 0; transform: translate(-50%,-50%) scale(0.5) rotate(0deg); }
+  40%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%,-50%) scale(2.5) rotate(30deg); }
+}
+
+/* ── Annotation ── */
+.sealed-entry__annotation {
+  margin-top: 0.7rem;
+  font-family: 'Caveat', cursive;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  color: rgba(237,207,179,0.6);
+  transform: rotate(-3deg);
+  display: block;
+}
+
+/* ── Ribbon sweep ── */
+.sealed-entry__ribbon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 45%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(237,207,179,0.4) 40%,
+    rgba(196,136,106,0.65) 50%,
+    rgba(237,207,179,0.4) 60%,
+    transparent 100%
+  );
+  opacity: 0;
+  transform: translateX(-160%) skewX(-12deg);
+  animation: entryRibbonSweep 0.65s var(--ease-out-expo, cubic-bezier(0.22,1,0.36,1)) 0.1s forwards;
+  pointer-events: none;
+}
+
+@keyframes entryRibbonSweep {
+  0%   { opacity: 0; transform: translateX(-160%) skewX(-12deg); }
+  25%  { opacity: 1; }
+  100% { opacity: 0; transform: translateX(420%) skewX(-12deg); }
+}
+
+/* ── Farewell sunrise flash ── */
+.sealed-entry__farewell {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 120% 80% at 50% 100%,
+    rgba(255,220,170,0.8) 0%,
+    rgba(196,136,106,0.5) 25%,
+    rgba(168,103,62,0.25) 50%,
+    transparent 70%
+  );
+  opacity: 0;
+  animation: sunrisePulse 1s ease-out forwards;
+}
+
+@keyframes sunrisePulse {
+  0%   { opacity: 0; transform: scaleY(0.8); }
+  35%  { opacity: 1; transform: scaleY(1); }
+  100% { opacity: 0; transform: scaleY(1.05); }
+}
+
+/* ── Skip ── */
+.sealed-entry__skip {
+  margin-top: 1.5rem;
+  padding: 0.65rem 1rem;
+  min-height: 44px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(237,207,179,0.35);
+  color: rgba(237,207,179,0.4);
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.2s ease;
+}
+
+.sealed-entry__skip:hover {
+  color: rgba(237,207,179,0.7);
+}
+
+.sealed-entry__skip:focus-visible {
+  outline: 2px solid rgba(196,136,106,0.6);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .sealed-entry {
+    padding: 1rem;
+  }
+  .sealed-entry__card {
+    max-width: 100%;
+    padding: 1.5rem 1rem;
+  }
+  .sealed-entry__seal {
+    width: 80px;
+    height: 80px;
+  }
+  .sealed-entry__ring {
+    width: 80px;
+    height: 80px;
+  }
+  .sealed-entry__moon {
+    width: 30px;
+    height: 30px;
+    top: 8%;
+    right: 10%;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .sealed-entry {
+    transition: opacity 0.3s ease;
+  }
+  .sealed-entry--leaving {
+    transform: none;
+  }
+  .sealed-entry--veil.sealed-entry--leaving {
+    clip-path: none;
+  }
+  .sealed-entry__star,
+  .sealed-entry__moon,
+  .sealed-entry__shooting-star,
+  .sealed-entry__seal {
+    animation: none;
+  }
+  .sealed-entry__moon {
+    opacity: 0.7;
+  }
+  .sealed-entry__seal--breaking {
+    animation: none;
+    opacity: 0;
+  }
+  .sealed-entry__ring--active,
+  .sealed-entry__rays--active {
+    animation: none;
+    display: none;
+  }
+  .sealed-entry__ribbon {
+    animation: none;
+    display: none;
+  }
+  .sealed-entry__farewell {
+    display: none;
+  }
+}

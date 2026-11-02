@@ -1,0 +1,282 @@
+/* ============================================================
+   Footer — The Final Page of a Printed Book
+   Rose Gold Candlelight edition.
+   ============================================================ */
+
+/* --- Container --- */
+.footer {
+  background: var(--bg-footer, #EEE4D9);
+  border-top: 1px solid var(--sand, #EDD9C8);
+  padding: var(--section-padding-y, 4rem) var(--section-padding-x, 1.5rem) 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Warm vignette at top */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(180deg, rgba(237,217,200,0.5) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --- Soft radial glow behind "19" --- */
+.footer__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(196,136,106,0.12) 0%,
+    rgba(196,136,106,0.05) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- Gold Divider — draws from center --- */
+.footer__divider {
+  width: 4rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold, #C4886A), transparent);
+  margin: 0 auto 2rem;
+  position: relative;
+  z-index: 2;
+  opacity: 0.7;
+}
+
+/* --- Main Text: "Made for Luna" --- */
+.footer__main {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+  font-weight: 500;
+  color: var(--text-light, #8A7E6E);
+  margin: 0 0 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 2;
+}
+
+/* --- "19" — the hero number --- */
+.footer__age {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 1.5rem;
+}
+
+.footer__age-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 700;
+  color: var(--gold, #C4886A);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  display: inline-block;
+  text-shadow:
+    0 0 40px rgba(196,136,106,0.22),
+    0 0 80px rgba(196,136,106,0.1);
+}
+
+/* --- Tagline: "With warmth & gratitude" --- */
+.footer__tagline {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  font-weight: 400;
+  color: var(--text-light, #8A7468);
+  margin: 0 0 1.25rem;
+  line-height: 1.5;
+  font-style: italic;
+  position: relative;
+  z-index: 2;
+}
+
+/* --- Made by credit --- */
+.footer__maker {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--text-light, #8A7468);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin: 0 0 0.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.footer__maker-name {
+  font-family: 'Caveat', cursive;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--gold, #C4886A);
+  text-transform: none;
+  opacity: 1;
+}
+
+/* --- Copyright: "© 2026" --- */
+.footer__copyright {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: var(--text-light, #8A7468);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  margin: 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* --- Sealed line: closing beat under the keepsake strip --- */
+.footer__sealed {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1rem, 2.4vw, 1.4rem);
+  font-weight: 500;
+  font-style: italic;
+  color: var(--text, #2E2A27);
+  margin: 0 0 2.5rem;
+  line-height: 1.5;
+  position: relative;
+  z-index: 2;
+}
+
+/* --- Fade-to-dark bottom edge — book closing gesture --- */
+.footer__fade-out {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(180deg, transparent 0%, rgba(46, 42, 39, 0.08) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================================
+   FLOATING STARS — tiny twinkling particles
+   ============================================================ */
+
+.footer__stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.footer__star {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gold-light, #E0C99A);
+  opacity: 0;
+  animation: footerStarTwinkle 3s ease-in-out infinite;
+}
+
+@keyframes footerStarTwinkle {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 0.6; transform: scale(1); }
+}
+
+/* ============================================================
+   NINETEEN CLICK TARGET
+   ============================================================ */
+
+.footer__nineteen {
+  /* Button reset — element was a span; keep appearance identical as a <button> */
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  transition: color var(--duration-normal, 0.25s) ease, transform var(--duration-fast, 0.15s) var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  display: inline-block;
+}
+
+.footer__nineteen:hover {
+  color: var(--gold-light, #E0C99A);
+  transform: scale(1.08);
+}
+
+.footer__nineteen:active {
+  transform: scale(0.9);
+  transition: transform 0.06s var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
+}
+
+/* Inline "Luna" button — inherit the paragraph's typography like the original span did */
+.footer__main .footer__nineteen {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+/* ============================================================
+   EASTER EGG
+   ============================================================ */
+
+.footer--egged {
+  animation: eggGlow 0.4s ease 3;
+}
+
+@keyframes eggGlow {
+  0%, 100% { background: var(--bg-footer, #ECE6D9); }
+  50% { background: var(--gold-light, #E0C99A); }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .footer__star {
+    animation: none;
+    opacity: 0.2;
+  }
+
+  .footer__nineteen {
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .footer__nineteen:hover {
+    transform: none !important;
+  }
+
+  .footer__nineteen:active {
+    transform: none !important;
+  }
+}
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 640px) {
+  .footer {
+    padding: var(--section-padding-y-mobile, 3rem) var(--section-padding-x-mobile, 1rem) 2.5rem;
+  }
+
+  .footer__glow {
+    width: 200px;
+    height: 200px;
+  }
+
+  .footer__age-num {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+}

@@ -1,0 +1,81 @@
+/* ============================================================
+   Ambient Sparkles — SVG ambient particle system
+   ============================================================ */
+
+.ambient-sparkles-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.ambient-sparkles-container--paused .ambient-sparkle {
+  animation-play-state: paused !important;
+}
+
+/* --- Base sparkle style --- */
+.ambient-sparkle {
+  position: absolute;
+  will-change: transform, opacity;
+  transition: transform 0.3s ease-out;
+}
+
+/* --- Twinkle animation classes --- */
+.ambient-sparkle--star {
+  animation: sparkleTwinkle 4s ease-in-out infinite;
+}
+
+.ambient-sparkle--dot {
+  animation: sparklePulse 3.5s ease-in-out infinite;
+}
+
+.ambient-sparkle--diamond {
+  animation: sparkleTwinkle 5s ease-in-out infinite;
+}
+
+.ambient-sparkle--spec {
+  animation: sparklePulse 6s ease-in-out infinite;
+}
+
+@keyframes sparkleTwinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+@keyframes sparklePulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.6; }
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  .ambient-sparkle {
+    animation: none !important;
+    opacity: 0.3 !important;
+    transform: none !important;
+  }
+}
+
+/* --- Ambient background animations --- */
+
+@keyframes ambientDrift {
+  0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.15; }
+  25% { transform: translateY(-6px) translateX(4px); opacity: 0.2; }
+  50% { transform: translateY(4px) translateX(-3px); opacity: 0.1; }
+  75% { transform: translateY(-3px) translateX(5px); opacity: 0.18; }
+}
+
+@keyframes ambientOrbit {
+  0%, 100% { transform: translate(0, 0); opacity: 0.04; }
+  33% { transform: translate(30px, -20px); opacity: 0.06; }
+  66% { transform: translate(-20px, 15px); opacity: 0.03; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-dust,
+  .ambient-light {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}

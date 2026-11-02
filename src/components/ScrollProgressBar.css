@@ -1,0 +1,47 @@
+/* ============================================================
+   ScrollProgressBar — Gold scroll progress indicator
+   ============================================================ */
+
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 9999;
+  pointer-events: none;
+  background: var(--gold, #C8A46B);
+  box-shadow: 0 0 6px rgba(200, 164, 107, 0.4);
+  transform-origin: 0%;
+}
+
+/* ─── XIX end marker ────────────────────────────────── */
+.scroll-progress-bar__xix {
+  position: fixed;
+  top: 0;
+  right: 12px;
+  height: 3px;
+  display: flex;
+  align-items: center;
+  z-index: 10000;
+  pointer-events: none;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--gold, #C8A46B);
+  text-shadow: 0 0 4px rgba(200, 164, 107, 0.3);
+  transform: translateY(-50%);
+  user-select: none;
+}
+
+/* ─── Reduced motion ─────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress-bar {
+    opacity: 0;
+  }
+
+  .scroll-progress-bar__xix {
+    opacity: 0;
+  }
+}

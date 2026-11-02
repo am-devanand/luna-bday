@@ -1,0 +1,118 @@
+/* Tailwind preflight only (reset). No utilities/theme used — all styling is custom CSS. */
+@import "tailwindcss/preflight.css";
+
+/* === Rose Gold Candlelight Design Tokens === */
+:root {
+  /* ── Colors — Rose Gold Candlelight ── */
+  --bg: #FAF4EE;
+  --card: #FFFFFF;
+  --sand: #EDD9C8;
+  --warm-gray: #C9B8AB;
+  --text: #2E2620;
+  --gold: #C4886A;           /* amber-rose gold — warmer, pinker */
+  --gold-light: #EDCFB3;     /* champagne blush */
+  --gold-dark: #A8673E;      /* deep amber */
+  --sparkle-gold: rgba(196,136,106,0.6);
+  --text-light: #8A7468;
+  --accent: #F5EBE3;         /* barely-there rose */
+  --rose: #C4847A;           /* deep rose — cake script, accents */
+  --rose-light: #EDCDC9;     /* blush surface */
+  --shadow: rgba(46,38,32,0.09);
+
+  /* ── Section backgrounds — warm rose-cream rhythm ── */
+  --bg-hero: #FAF6F0;
+  --bg-gallery: #F6EDE5;
+  --bg-letter: #F2E8E0;
+  --bg-music: #EEE4DA;
+  --bg-playground: #F3EDE6;
+  --bg-wish: #FBF7F3;
+  --bg-footer: #EEE4D9;
+
+  /* ── Easing curves ── */
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ── Timing ── */
+  --duration-fast: 0.15s;
+  --duration-normal: 0.25s;
+  --duration-slow: 0.4s;
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.08), 0 16px 48px rgba(0,0,0,0.05);
+  --shadow-xl: 0 8px 32px rgba(0,0,0,0.1), 0 24px 64px rgba(0,0,0,0.06);
+
+  /* ── Border radius ── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* ── Section spacing ── */
+  --section-padding-y: 4rem;
+  --section-padding-x: 1.5rem;
+  --section-padding-y-mobile: 3rem;
+  --section-padding-x-mobile: 1rem;
+}
+
+/* === Base === */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* === Typography === */
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 600;
+}
+
+/* === Custom Utilities === */
+.text-balance { text-wrap: balance; }
+
+/* === Scroll Reveal === */
+/* DEPRECATED — kept for legacy compatibility */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* === Film Grain Overlay === */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after { opacity: 0.015; }
+}
+
+/* === Reduced Motion === */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
