@@ -293,6 +293,11 @@ function shouldCompact(): boolean {
 }
 export default function HeroSection() {
   const [imageStatus, setImageStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
+  /* Phones get the settled portrait card from the first frame. The full
+     cinematic belongs to wide screens; on a phone it used to play the
+     desktop composition behind the seal, then snap to the compact card
+     once the reveal was already visible. Render the destination instead. */
+  const [mobileStatic] = useState(() => shouldCompact());
   /* Seal arrival → auto-merge ritual (zero clicks); reduced-motion + seal settles instantly. */
   const [autoMerge] = useState(readSealArrival);
   const [autoReducedSettled] = useState(() => autoMerge && isReducedMotion());
@@ -347,6 +352,12 @@ export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const timersRef = useRef<number[]>([]);
   const [ribbonTipRange, setRibbonTipRange] = useState<{ start: number; end: number } | null>(null);
+
+  /* Phones jump straight to the settled card, so the cinematic timeline
+     must not fire behind the seal (it would only animate hidden layers). */
+  useEffect(() => {
+    if (mobileStatic) skipped.current = true;
+  }, [mobileStatic]);
 
   /* ── Preload image ── */
   useEffect(() => {
@@ -675,14 +686,16 @@ export default function HeroSection() {
       ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
       : false;
 
-  if (prefersReduced) {
+  if (prefersReduced || mobileStatic) {
     return (
-      <section className={`hero-section ${mergePhase === 'compact' ? 'hero-section--compact' : ''}`} aria-label="Hero" role="banner">
+      <section className={`hero-section ${mobileStatic || mergePhase === 'compact' ? 'hero-section--compact' : ''}`} aria-label="Hero" role="banner">
         {imageStatus !== 'error' && (
-          <picture>
-            <source type="image/avif" srcSet={BG_IMAGE_AVIF} sizes={BG_IMAGE_SIZES} />
-            <img src={BG_IMAGE_PATH} alt="" aria-hidden="true" className="hero-section__bg hero-section__bg--loaded" />
-          </picture>
+          <div className="hero-section__aperture">
+            <picture>
+              <source type="image/avif" srcSet={BG_IMAGE_AVIF} sizes={BG_IMAGE_SIZES} />
+              <img src={BG_IMAGE_PATH} alt="" aria-hidden="true" className="hero-section__bg hero-section__bg--loaded" />
+            </picture>
+          </div>
         )}
         {imageStatus === 'error' && <div className="hero-section__fallback" aria-hidden="true" />}
         <div className="hero-section__color-grade" aria-hidden="true" />
@@ -702,12 +715,22 @@ export default function HeroSection() {
             <span className="hero-section__title-gradient">Swethaaa</span>
           </h1>
           <p className="hero-section__subtitle">A little universe, lit only for you.</p>
-          {!autoMerge && !liveAuto && <EnterButton enchanted={false} dispersing={false} inhaling={false} buttonRef={buttonRef} onEnter={handleEnter} />}
+          {!mobileStatic && !autoMerge && !liveAuto && <EnterButton enchanted={false} dispersing={false} inhaling={false} buttonRef={buttonRef} onEnter={handleEnter} />}
         </div>
-        <div className="hero-section__scroll" aria-hidden="true">
-          <span className="hero-section__scroll-label">Scroll</span>
-          <ChevronDown />
-        </div>
+        {mobileStatic ? (
+          <div className="hero-section__settle-cue" aria-hidden="true">
+            <span className="hero-section__settle-cue-label">scroll gently</span>
+            <span className="hero-section__settle-chevrons">
+              <ChevronDown />
+              <ChevronDown />
+            </span>
+          </div>
+        ) : (
+          <div className="hero-section__scroll" aria-hidden="true">
+            <span className="hero-section__scroll-label">Scroll</span>
+            <ChevronDown />
+          </div>
+        )}
         {showConfetti && <ConfettiBurst level="small" />}
       </section>
     );

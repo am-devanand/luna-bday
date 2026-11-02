@@ -461,6 +461,24 @@
   }
 }
 
+/* Phones: lift the whole gate as one opaque curtain. The old clip-path
+   plus opacity fade let the sunrise tint wash over the hero mid-reveal
+   and stuttered on mobile GPUs; a single transform is compositor-only. */
+@media (max-width: 640px) and (prefers-reduced-motion: no-preference) {
+  .sealed-entry {
+    transition: transform 0.7s var(--ease-out-expo, cubic-bezier(0.22,1,0.36,1));
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+  .sealed-entry--leaving,
+  .sealed-entry--veil.sealed-entry--leaving {
+    opacity: 1;
+    clip-path: none;
+    transform: translate3d(0, -100%, 0);
+    transition: transform 0.7s var(--ease-out-expo, cubic-bezier(0.22,1,0.36,1));
+  }
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   .sealed-entry {
