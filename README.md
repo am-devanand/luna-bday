@@ -52,9 +52,8 @@ hidden until the recording is in place, so nothing looks broken in the meantime.
 The player obeys the site-wide one-audio-at-a-time rule, so it pauses the music or
 a gift note when it starts.
 
-The guestbook runs in local demo mode (wishes live in `localStorage`). To collect
-real wishes, set `VITE_FORMSPREE_ENDPOINT` (e.g. `https://formspree.io/f/xxxx`) in
-`.env` at build time.
+The wish wall is a fixed collection of four wishes written for Swethaaa — there is
+no public form, so nothing can be added or changed from the page.
 
 ## Deploy
 

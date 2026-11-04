@@ -1,12 +1,13 @@
 /* ============================================================
-   Guestbook — Premium Guestbook (Redesigned)
-   Paper texture, lined inputs, floating labels,
-   ink animations, wax seal, stamped letter button.
+   Guestbook — the kept wish wall
+   One paper card, four wishes, a wax seal. No form: the wall is
+   a fixed little collection written for Swethaaa.
    ============================================================ */
 
 /* ── Section Root ── */
 .guestbook {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -44,26 +45,25 @@
    PAPER CARD — Raised, textured, tactile
    ════════════════════════════════════════════════════════════ */
 
-.guestbook__inner {
-  max-width: 520px;
+.guestbook__wall {
+  max-width: 560px;
   width: 100%;
   position: relative;
+  z-index: 1;
   background: #FFFDF9;
-  padding: 2.75rem 2.5rem 2.5rem;
+  padding: 2.5rem 2.5rem 2rem;
   box-shadow:
     0 1px 2px rgba(0, 0, 0, 0.04),
     0 4px 12px rgba(0, 0, 0, 0.04),
     0 12px 40px rgba(0, 0, 0, 0.03),
-    /* Subtle warm glow behind card */
     0 0 60px rgba(200, 164, 107, 0.04);
-  /* Paper fiber texture */
   background-image:
     radial-gradient(ellipse at 30% 20%, rgba(200, 164, 107, 0.02) 0%, transparent 50%),
     radial-gradient(ellipse at 70% 80%, rgba(200, 164, 107, 0.015) 0%, transparent 50%);
 }
 
 /* Top edge shadow — paper thickness illusion */
-.guestbook__inner::before {
+.guestbook__wall::before {
   content: '';
   position: absolute;
   top: 0;
@@ -125,8 +125,6 @@
   user-select: none;
 }
 
-
-
 /* ════════════════════════════════════════════════════════════
    TYPOGRAPHY
    ════════════════════════════════════════════════════════════ */
@@ -147,7 +145,7 @@
   font-family: 'Caveat', cursive;
   font-size: clamp(0.95rem, 2vw, 1.1rem);
   color: var(--text-light, #8A7E6E);
-  margin: 0 0 2rem;
+  margin: 0 0 1.4rem;
   text-align: center;
   letter-spacing: 0.01em;
 }
@@ -158,7 +156,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .guestbook__divider-line {
@@ -177,417 +175,60 @@
 }
 
 /* ════════════════════════════════════════════════════════════
-   FORM — Premium lined paper
+   WISH WALL
    ════════════════════════════════════════════════════════════ */
 
-.guestbook__form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.75rem;
-}
-
-/* ── Field wrapper ── */
-.guestbook__field {
-  position: relative;
+.guestbook__wall-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
 }
 
-/* ── Floating Label ── */
-.guestbook__label {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-light, #8A7E6E);
-  position: absolute;
-  left: 0;
-  top: 0.65rem;
-  pointer-events: none;
-  transition:
-    transform var(--duration-normal, 0.25s) var(--ease-out-expo, cubic-bezier(0.22, 1, 0.36, 1)),
-    font-size var(--duration-normal, 0.25s) var(--ease-out-expo, cubic-bezier(0.22, 1, 0.36, 1)),
-    color var(--duration-normal, 0.25s) ease;
-  transform-origin: left center;
-  z-index: 1;
+.guestbook__wall-item {
+  padding: 1.05rem 0;
+  border-top: 1px solid var(--sand, #E7D7C1);
 }
 
-/* Float up when focused or has value */
-.guestbook__field--focused .guestbook__label,
-.guestbook__field--filled .guestbook__label {
-  transform: translateY(-1.3rem);
-  font-size: 0.6rem;
-  color: var(--gold, #C8A46B);
+.guestbook__wall-item:first-child {
+  border-top: none;
+  padding-top: 0.35rem;
 }
 
-/* ── Input container — lined paper aesthetic ── */
-.guestbook__input-wrap {
-  position: relative;
-  width: 100%;
-}
-
-/* Lined paper background — horizontal ruled lines */
-.guestbook__input-wrap::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent calc(1.8rem - 1px),
-    var(--sand, #E7D7C1) calc(1.8rem - 1px),
-    var(--sand, #E7D7C1) 1.8rem
-  );
-  opacity: 0.35;
-  pointer-events: none;
-  border-radius: 2px;
-}
-
-/* Red margin line (left) — notebook style */
-.guestbook__input-wrap::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 2.5rem;
-  width: 1px;
-  background: rgba(200, 140, 107, 0.15);
-  pointer-events: none;
-}
-
-/* ── Input & Textarea — ink on paper ── */
-.guestbook__input,
-.guestbook__textarea {
-  width: 100%;
-  font-family: 'Caveat', cursive;
-  font-size: 1.15rem;
-  color: var(--text, #2E2A27);
-  background: transparent;
-  border: none;
-  border-bottom: 1.5px solid transparent;
-  padding: 0.55rem 0;
-  padding-left: 2.8rem;
-  outline: none;
-  box-sizing: border-box;
-  border-radius: 0;
-  -webkit-appearance: none;
-  position: relative;
-  z-index: 1;
-  transition: border-color var(--duration-normal, 0.25s) ease;
-  /* Ink handwriting feel */
-  letter-spacing: 0.01em;
-  line-height: 1.8rem;
-}
-
-.guestbook__textarea {
-  min-height: 120px;
-  line-height: 1.8rem;
-  resize: vertical;
-  padding-top: 0.55rem;
-}
-
-/* Floating labels already occupy the empty state — a placeholder here
-   printed on top of the label ("YOUR BIRTHDAY WISH / Write your wish
-   here…"). Keep the field clean until it floats. */
-.guestbook__input::placeholder,
-.guestbook__textarea::placeholder {
-  color: transparent;
-  opacity: 0;
-}
-
-/* Ink underline animation on focus */
-.guestbook__input:focus,
-.guestbook__textarea:focus {
-  border-bottom-color: var(--gold, #C8A46B);
-}
-
-/* Ink flourish — animated gold line under input on focus */
-.guestbook__field::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    var(--gold, #C8A46B),
-    var(--gold-light, #E0C99A)
-  );
-  border-radius: 1px;
-  transition: width var(--duration-slow, 0.4s) var(--ease-out-expo, cubic-bezier(0.22, 1, 0.36, 1));
-  z-index: 2;
-}
-
-.guestbook__field--focused::after {
-  width: 100%;
-}
-
-.guestbook__input:disabled,
-.guestbook__textarea:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* ── Field errors — inline, warm, quiet ── */
-.guestbook__field-error {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.75rem;
-  font-style: italic;
-  color: var(--error, #B0603C);
-  margin: 0.4rem 0 0;
-  line-height: 1.5;
-}
-
-/* Invalid fields get a quiet rust ink underline instead of gold */
-.guestbook__input[aria-invalid='true'],
-.guestbook__textarea[aria-invalid='true'] {
-  border-bottom-color: var(--error, #B0603C);
-}
-
-/* ════════════════════════════════════════════════════════════
-   STAMPED LETTER BUTTON
-   ════════════════════════════════════════════════════════════ */
-
-.guestbook__submit-wrap {
-  position: relative;
+.guestbook__wall-head {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
-  margin-top: 0.5rem;
+  gap: 0.75rem;
+  margin-bottom: 0.3rem;
 }
 
-.guestbook__submit {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.7rem 2rem;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--gold-dark, #A8884D);
-  background: transparent;
-  border: 1.5px solid var(--gold, #C8A46B);
-  border-radius: var(--radius-full, 9999px);
-  cursor: pointer;
-  overflow: hidden;
-  transition:
-    background var(--duration-normal, 0.25s) ease,
-    color var(--duration-normal, 0.25s) ease,
-    box-shadow var(--duration-normal, 0.25s) ease,
-    transform var(--duration-fast, 0.15s) var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1)),
-    border-color var(--duration-normal, 0.25s) ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* Stamp ink texture overlay */
-.guestbook__submit::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
-  background-size: 80px 80px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.guestbook__submit:hover::before {
-  opacity: 1;
-}
-
-/* Hover — ink fills the stamp */
-.guestbook__submit:hover:not(:disabled) {
-  background: var(--gold, #C8A46B);
-  color: #fff;
-  box-shadow: var(--shadow-md, 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04));
-  transform: translateY(-1px);
-}
-
-/* Active — stamp press effect */
-.guestbook__submit:active:not(:disabled) {
-  transform: translateY(1px) scale(0.97);
-  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03));
-  transition: transform 0.06s var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1)), box-shadow 0.1s ease;
-}
-
-.guestbook__submit:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Focus ring */
-.guestbook__submit:focus-visible {
-  outline: 2px solid var(--gold-light, #E0C99A);
-  outline-offset: 3px;
-}
-
-/* Submit ripple effect */
-.guestbook__submit-ripple {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
-  transform: scale(0);
-  animation: guestbook-ripple 0.6s ease-out forwards;
-  pointer-events: none;
-}
-
-@keyframes guestbook-ripple {
-  to {
-    transform: scale(4);
-    opacity: 0;
-  }
-}
-
-/* ── Loading state ── */
-.guestbook__submit-loading {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.guestbook__spinner {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  border: 2px solid rgba(200, 164, 107, 0.3);
-  border-top-color: var(--gold, #C8A46B);
-  border-radius: 50%;
-  animation: guestbook-spin 0.7s linear infinite;
-}
-
-@keyframes guestbook-spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Small decorative divider near submit */
-.guestbook__form-divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.guestbook__form-divider-line {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--sand, #E7D7C1) 30%,
-    var(--sand, #E7D7C1) 70%,
-    transparent
-  );
-  opacity: 0.4;
-}
-
-/* ════════════════════════════════════════════════════════════
-   SUCCESS STATE
-   ════════════════════════════════════════════════════════════ */
-
-.guestbook__success {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.25rem;
-  padding: 2.5rem 0;
-  text-align: center;
-}
-
-.guestbook__checkmark {
-  color: var(--gold, #C8A46B);
-  animation: guestbook-seal-stamp 0.5s var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
-}
-
-@keyframes guestbook-seal-stamp {
-  0% { transform: scale(0) rotate(-30deg); opacity: 0; }
-  60% { transform: scale(1.15) rotate(3deg); opacity: 1; }
-  100% { transform: scale(1) rotate(0deg); opacity: 1; }
-}
-
-.guestbook__success-text {
-  font-family: 'Caveat', cursive;
-  font-size: 1.2rem;
+.guestbook__wall-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 700;
   color: var(--text, #2E2A27);
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
-/* ── Error State ── */
-.guestbook__error {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.25rem;
-  padding: 2.5rem 0;
+.guestbook__wall-date {
+  font-family: 'Caveat', cursive;
+  font-size: 0.95rem;
+  color: var(--text-light, #8A7E6E);
+  white-space: nowrap;
 }
 
-.guestbook__error-text {
+.guestbook__wall-message {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 0.9rem;
-  color: var(--text-light, #8A7E6E);
+  color: var(--text, #2E2A27);
   margin: 0;
-  line-height: 1.6;
-  font-style: italic;
-}
-
-/* ── Reset Button ── */
-.guestbook__reset-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem 1.25rem;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--gold, #C8A46B);
-  background: transparent;
-  border: 1.5px solid var(--gold, #C8A46B);
-  border-radius: var(--radius-full, 9999px);
-  cursor: pointer;
-  transition:
-    background var(--duration-fast, 0.15s) ease,
-    color var(--duration-fast, 0.15s) ease,
-    transform var(--duration-fast, 0.15s) var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
-  -webkit-tap-highlight-color: transparent;
-}
-
-.guestbook__reset-btn:focus-visible {
-  outline: 2px solid var(--gold-light, #E0C99A);
-  outline-offset: 3px;
-}
-
-.guestbook__reset-btn:hover {
-  background: var(--gold, #C8A46B);
-  color: #fff;
-}
-
-.guestbook__reset-btn:active {
-  transform: scale(0.94);
-  transition: transform 0.06s var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
-}
-
-/* ════════════════════════════════════════════════════════════
-   REDUCED MOTION
-   ════════════════════════════════════════════════════════════ */
-
-@media (prefers-reduced-motion: reduce) {
-  .guestbook__spinner { animation: none; }
-  .guestbook__checkmark { animation: none; }
-  .guestbook__submit-ripple { animation: none; }
-  .guestbook__input,
-  .guestbook__textarea { transition: none !important; }
-  .guestbook__submit { transition: none !important; transform: none !important; }
-  .guestbook__field::after { transition: none !important; }
-  .guestbook__label { transition: none !important; }
-  .guestbook__reset-btn { transition: none !important; transform: none !important; }
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -599,29 +240,12 @@
     padding: var(--section-padding-y-mobile, 3rem) var(--section-padding-x-mobile, 1rem) 2.5rem;
   }
 
-  .guestbook__inner {
-    padding: 2rem 1.5rem 1.75rem;
+  .guestbook__wall {
+    padding: 2rem 1.5rem 1.5rem;
   }
 
   .guestbook__heading {
     font-size: 1.4rem;
-  }
-
-  .guestbook__input,
-  .guestbook__textarea {
-    font-size: 1.05rem;
-    padding-left: 2rem;
-  }
-
-  /* Hide margin line on mobile for cleaner look */
-  .guestbook__input-wrap::after {
-    display: none;
-  }
-
-  .guestbook__submit {
-    width: 100%;
-    justify-content: center;
-    padding: 0.75rem 1.5rem;
   }
 
   .guestbook__seal-icon {
@@ -629,144 +253,19 @@
     height: 40px;
   }
 
-  .guestbook__seal-icon svg {
-    width: 16px;
-    height: 16px;
+  .guestbook__wall-item {
+    padding: 0.95rem 0;
   }
 }
 
 @media (max-width: 380px) {
-  .guestbook__inner {
-    padding: 1.75rem 1.25rem 1.5rem;
+  .guestbook__wall {
+    padding: 1.75rem 1.25rem 1.35rem;
   }
 }
 
-/* ============================================================
-   WISH WALL — local fallback, newest first
-   ============================================================ */
-
-/* Stack form card + wall vertically */
-.guestbook {
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.guestbook__wall {
-  max-width: 520px;
-  width: 100%;
-  position: relative;
-  background: #FFFDF9;
-  padding: 2rem 2rem 1.75rem;
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.04),
-    0 4px 12px rgba(0, 0, 0, 0.04),
-    0 12px 40px rgba(0, 0, 0, 0.03);
-}
-
-.guestbook__wall-heading {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(1.2rem, 3vw, 1.5rem);
-  font-weight: 700;
-  color: var(--text, #2E2A27);
-  margin: 0 0 0.2rem;
-  text-align: center;
-  letter-spacing: -0.01em;
-  line-height: 1.25;
-}
-
-.guestbook__wall-subtitle {
-  font-family: 'Caveat', cursive;
-  font-size: 1rem;
-  color: var(--text-light, #8A7E6E);
-  margin: 0 0 1.25rem;
-  text-align: center;
-}
-
-.guestbook__wall-empty {
-  font-family: 'Caveat', cursive;
-  font-size: 1.2rem;
-  color: var(--text-light, #8A7E6E);
-  text-align: center;
-  margin: 0;
-  padding: 1.75rem 1rem;
-  border-top: 1px solid var(--sand, #E7D7C1);
-  line-height: 1.5;
-}
-
-.guestbook__wall-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.guestbook__wall-item {
-  padding: 1rem 0;
-  border-top: 1px solid var(--sand, #E7D7C1);
-}
-
-.guestbook__wall-name {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text, #2E2A27);
-  margin: 0 0 0.25rem;
-  line-height: 1.4;
-  overflow-wrap: anywhere;
-}
-
-.guestbook__wall-message {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.9rem;
-  color: var(--text, #2E2A27);
-  margin: 0 0 0.4rem;
-  line-height: 1.6;
-  overflow-wrap: anywhere;
-  white-space: pre-wrap;
-}
-
-.guestbook__wall-meta {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 0;
-}
-
-.guestbook__wall-date {
-  font-family: 'Caveat', cursive;
-  font-size: 0.95rem;
-  color: var(--text-light, #8A7E6E);
-}
-
-.guestbook__wall-tag {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.65rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--gold-dark, #A8884D);
-  border: 1px solid var(--gold, #C8A46B);
-  border-radius: var(--radius-full, 9999px);
-  padding: 0.15rem 0.6rem;
-}
-
-.guestbook__wall-note {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.75rem;
-  font-style: italic;
-  color: var(--text-light, #8A7E6E);
-  text-align: center;
-  margin: 0.75rem 0 0;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .guestbook__wall { transition: none !important; transform: none !important; }
-}
-
-@media (max-width: 640px) {
-  .guestbook__wall {
-    padding: 1.5rem 1.25rem 1.25rem;
+  .guestbook__seal-icon {
+    transition: none;
   }
 }

@@ -212,7 +212,7 @@ export default function MusicPlayer() {
         animate={isInView ? 'visible' : 'hidden'}
       >
         <p className="music-player__dedication-title">On repeat, for Swethaaa</p>
-        <p className="music-player__dedication-sub">The Blessing — Kari Jobe, Cody Carnes &amp; Elevation Worship. A prayer for your nineteenth year, pressed here as SIDE 19.</p>
+        <p className="music-player__dedication-sub">The Blessing — Kari Jobe &amp; Cody Carnes. A prayer for your nineteenth year, pressed here as SIDE 19.</p>
         <p className="music-player__dedication-cue">press play when…</p>
       </motion.aside>
 
