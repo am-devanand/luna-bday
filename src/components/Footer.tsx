@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { motion, useInView, type Variants } from 'framer-motion';
-import KeepsakeStrip from './KeepsakeStrip';
 import ConfettiBurst from './magic/ConfettiBurst';
 import './Footer.css';
 
@@ -116,8 +115,7 @@ export default function Footer() {
         aria-hidden="true"
       />
 
-      {/* Closing beat: keepsake strip + sealed line */}
-      <KeepsakeStrip />
+      {/* Closing beat */}
       <p className="footer__sealed">Built for one person. Happy birthday, Swethaaa.</p>
       {/* Main text: "Made for Swethaaa" */}
       <motion.p

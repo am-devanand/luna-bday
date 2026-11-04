@@ -217,8 +217,8 @@ export default function GiftBoxes() {
                 </button>
                 <p className="gift-sheet__note" role="status" aria-live="polite">
                   {kept
-                    ? 'It lives in your keepsakes now, at the bottom of the page.'
-                    : 'Keep it and it joins the little collection at the end.'}
+                    ? 'Kept. It’s yours — quietly, always.'
+                    : 'Keep it. No ribbon, no expiry.'}
                 </p>
               </>
             )}
