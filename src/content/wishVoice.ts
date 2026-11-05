@@ -9,10 +9,10 @@
  */
 export const WISH_VOICE = {
   /** Flip to `true` once the file below exists in `public/audio/`. */
-  ready: false,
+  ready: true,
   src: '/audio/wish-voice.mp3',
   /** Rough length in seconds, shown only until the file's metadata loads. */
-  approx: 30,
+  approx: 18.8,
   title: 'The wish, out loud',
   lead: 'I said it out loud so you could keep the sound, not just the words.',
 };
